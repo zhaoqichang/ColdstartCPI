@@ -1,0 +1,3 @@
+Protein:2122
+Protein:901
+Protein:93
