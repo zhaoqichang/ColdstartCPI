@@ -1,8 +1,10 @@
-# ColdstartCPI：Improving
+# ColdstartCPI
 ColdstartCPI：Improving compound-protein interaction prediction under cold-start scenarios by pretrain feature engineering
 This repository contains the source code and the data.
 
-## ColdstartCPI：Improving
+Predicting compound-protein interactions (CPIs) is a critical step in drug discovery. Existing deep-learning-based methods show promising performance, but generally fail to generalize well to novel compounds and proteins due to the high sparsity of CPI data. To this end, we propose ColdstartCPI, a two-step framework that generates compound and protein representations with unsupervised pre-training, utilizes a Transformer-based structure to unify the pre-trained feature space with the CPI prediction space, and improves interactions for novel compounds and proteins. ColdstartCPI is evaluated under four realistic scenarios and achieves accurate and robust performance against state-of-the-art baselines. Furthermore, we validate the top predictions of ColdstartCPI through comparison with the experimental evidence and docking simulations. Our results indicate that ColdstartCPI provides a unified framework for integrating pre-trained models with CPI prediction tasks, which promises to be a powerful tool for drug discovery.
+
+## ColdstartCPI
 
 <div align="center">
 <p><img src="model.jpg" width="600" /></p>
@@ -72,5 +74,10 @@ Dependencies:
 
 
 # Run:
- step 1: 
+step 1: Generate the feature matrices of compounds and proteins
+	1.1 For compounds:
+		1.1.1 
+	1.2 For proteins:
+setp 2: Training and testing
+	python train_Luo_Yamanishi.py
 python main.py
