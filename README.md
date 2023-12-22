@@ -73,6 +73,14 @@ Dependencies:
 			+ proseq.csv: Amino acid sequences of proteins
 + Pretrian_models
 	+ Mol2Vec
+	
+	Mol2Vec is customised version of Mol2Vec(https://github.com/samoturk/mol2vec). We recode the mol2vec/feature.py to generate feature matrices of compounds.
+	
+	You will obtain the feature vectors and matrices of the compounds by following the steps below:
+	1. Place the SMILES sequence file for the drug, e.g. A, in the Mol2Vec folder;
+	2. modify the code in lines 13-17 of the Mol2Vec.py file to obtain the dictionary Drug with key as Compound ID and Value as SMILES;
+		python Mol2Vec.py
+	
 	+ ProtTrans
 + Train
 	+ ColdstartCPI
