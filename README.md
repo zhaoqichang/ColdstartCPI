@@ -77,32 +77,45 @@ Dependencies:
 	Mol2Vec is customised version of Mol2Vec(https://github.com/samoturk/mol2vec). We recode the mol2vec/feature.py to generate feature matrices of compounds.
 	
 	You will obtain the feature vectors and matrices of the compounds by following the steps below:
-	1. Place the SMILES sequence file for the drug, e.g. A, in the Mol2Vec folder;
-	2. modify the code in lines 13-17 of the Mol2Vec.py file to obtain the dictionary Drug with key as Compound ID and Value as SMILES;
+	1. Place the SMILES sequence file of compounds, e.g. drug_list.txt, in the Mol2Vec folder;
+	2. modify the code in lines 13-17 of the Mol2Vec.py file to obtain the dictionary "Drug" with key as Compound ID and Value as SMILES.
+		
 		python Mol2Vec.py
 	
 	+ ProtTrans
+	You will obtain the feature vectors and matrices of the proteins by following the steps below:
+	1. Place the amino acid sequence file of portiens, e.g. protein_list.txt, in the ProtTrans folder;
+	2. modify the filepath in line 12 of the generator.py file and run generator.py.
+
+		python generator.py
+	
+	
 + Train
-	+ ColdstartCPI
+	+ ColdstartCPI: The codes of training, testing, and model.
 		+ ablation
-			+ model.py 
+			+ model.py: The codes of WOPretrain, WODecouple, WOTransformer, MolTrans_pretrain, and DrugBAN_pretrain.
 		+ dataset.py
-		+ model.py
-		+ train_BindingDB_AIBind.py
-		+ train_BindingDB_AIBind_missing.py
-		+ train_BindingDB_CrossDomain.py
-		+ train_BindingDB_InDomain.py
-		+ train_BindingDB_missing.py
-		+ train_BioSNAP_CrossDomain.py
-		+ train_BioSNAP_InDomain.py
-		+ train_BioSNAP_missing.py
-		+ train_Luo_Yamanishi.py
+		+ model.py: The code of ColdstartCPI.
+		+ train_BindingDB_AIBind.py: The code of evaluation in BindingDB_AIBind under warm start, compound cold start, protein cold start, and blind start.
+		+ train_BindingDB_AIBind_missing.py: The code of evaluation in BindingDB_AIBind with scarce data.
+		+ train_BindingDB_CrossDomain.py: The code of evaluation in BindingDB under blind start.
+		+ train_BindingDB_InDomain.py: The code of evaluation in BindingDB under warm start.
+		+ train_BindingDB_missing.py: The code of evaluation in BindingDB with scarce data.
+		+ train_BioSNAP_CrossDomain.py: The code of evaluation in BioSNAP under blind start.
+		+ train_BioSNAP_InDomain.py: The code of evaluation in BioSNAP under warm start.
+		+ train_BioSNAP_missing.py: The code of evaluation in BioSNAP with scarce data.
+		+ train_Luo_Yamanishi.py: The code of evaluation in the Luo and Yamanishi datasets under warm start, compound cold start and protein cold start.
 
 
 # Run:
 + step 1: Generate the feature matrices of compounds and proteins
 	+ 1.1 For compounds:
-		+ 1.1.1 
+		+ Move the Mol2Vec-generated compound_Mol2Vec300.pkl and compound_Atom2Vec300.pkl to the feature folder in the corresponding dataset.
 	+ 1.2 For proteins:
+		+ Move the ProtTrans-generated aas_ProtTransBertBFD1024.pkl to the feature folder in the corresponding dataset.
 + setp 2: Training and testing
 	+ python train_Luo_Yamanishi.py
+	
+	The results are saved in the Results folder.
+	
+	
