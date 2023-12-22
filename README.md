@@ -28,31 +28,49 @@ Dependencies:
 + README.md: this file.
 + Datasets: The datasets used in paper.
 	+ BindingDB: 
-		+ Cross_domain
-		+ feature
-		+ In_domain
-		+ full_pair.csv
+		+ Cross_domain: The datasets for blind start.
+		+ feature: Contain the SMILES strings of compounds and amino acid sequences of proteins. 
+			+ drug_list.txt: The SMILES strings of compounds
+			+ protein_list.txt: Amino acid sequences of proteins
+		+ In_domain: The datasets for warm start.
+		+ full_pair.csv: The full dataset with positives and negatives for performance evaluation with scarce data.
 	+ BindingDB_AIBind: 
-		+ drug_coldstart
-		+ feature
-		+ pair_coldstart
-		+ protein_coldstart
-		+ warm_start
-		+ drug_without_feature.txt
-		+ full_pair.csv
-		+ full_pair.txt
-		+ protein_without_feature.txt
+		+ drug_coldstart: The datasets for compound cold start.
+		+ feature: Contain the SMILES strings of compounds and amino acid sequences of proteins. 
+			+ drug_list.txt: The SMILES strings of compounds
+			+ protein_list.txt: Amino acid sequences of proteins
+		+ pair_coldstart: The datasets for blind start.
+		+ protein_coldstart: The datasets for protein cold start.
+		+ warm_start: The datasets for warm start.
+		+ drug_without_feature.txt: Contain the compounds of which the SMILES cannot be recongnized by Mol2Vec.
+		+ full_pair.csv: The full dataset with positives and negatives for performance evaluation with scarce data.
+		+ full_pair.txt: The full dataset with positives and negatives for performance evaluation with scarce data.
+		+ protein_without_feature.txt: Contain the proteins of which the amino acid sequence cannot be recongnized by ProtTrans.
 	+ BioSNAP
-		+ Cross_domain
-		+ feature
-		+ In_domain
-		+ full_pair.csv
+		+ Cross_domain: The datasets for blind start.
+		+ feature: Contain the SMILES strings of compounds and amino acid sequences of proteins. 
+			+ drug_list.txt: The SMILES strings of compounds
+			+ protein_list.txt: Amino acid sequences of proteins
+		+ In_domain: The datasets for warm start.
+		+ full_pair.csv: The full dataset with positives and negatives for performance evaluation with scarce data.
 	+ luo's_dataset
 		+ data_folds
-		+ feature
+			+ warm_start_1_1: The datasets for warm start with Positives：Negatives=1:1.
+			+ warm_start_1_10: The datasets for warm startwith Positives：Negatives=1:10.
+			+ drug_coldstart: The datasets for compound cold start.
+			+ protein_coldstart: The datasets for protein cold start.
+		+ feature: Contain the SMILES strings of compounds and amino acid sequences of proteins. 
+			+ drug_smiles.csv: The SMILES strings of compounds
+			+ proseq.csv: Amino acid sequences of proteins
 	+ yamanishi_08
 		+ data_folds
-		+ feature
+			+ warm_start_1_1: The datasets for warm start with Positives：Negatives=1:1.
+			+ warm_start_1_10: The datasets for warm startwith Positives：Negatives=1:10.
+			+ drug_coldstart: The datasets for compound cold start.
+			+ protein_coldstart: The datasets for protein cold start.
+		+ feature: Contain the SMILES strings of compounds and amino acid sequences of proteins. 
+			+ drug_smiles.csv: The SMILES strings of compounds
+			+ proseq.csv: Amino acid sequences of proteins
 + Pretrian_models
 	+ Mol2Vec
 	+ ProtTrans
