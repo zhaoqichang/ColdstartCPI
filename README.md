@@ -44,7 +44,7 @@ Recommended Hardware: 128 GB RAM, 40 CPU processors, 4 TB disk storage, >=30 GB 
 
 Recommended OS: Linux (Ubuntu 16.04, CentOS 7, etc.)
 
-#### Option 1. One-step installation
+#### One-step installation
 Install coldstartcpi, its dependencies, and other required packages in one step using [conda](https://conda.io/docs/) and [environment.yml](environment.yml):
 ```shell
 # download ColdstartCPI
@@ -186,15 +186,16 @@ Reproduce the reported results on BindingDB_AIBind, BioSNAP, and BindingDB under
 
 Take BindingDB_AIBind as example:
 
-	+ step 1: Make sure that [_feature_](/Datasets/BindingDB_AIBind/feature) already holds the pre-training feature files (i.e., compound_Atom2Vec300.pkl, compound_Mol2Vec300.pkl, and aas_ProtTransBertBFD1024.pkl) for compounds and proteins;
++ step 1: Make sure that [_feature_](/Datasets/BindingDB_AIBind/feature) already holds the pre-training feature files (i.e., compound_Atom2Vec300.pkl, compound_Mol2Vec300.pkl, and aas_ProtTransBertBFD1024.pkl) for compounds and proteins;
 
-	+ setp 2: Move the folds [_BindingDB_AIbind_](/Pretrian_models/BindingDB_AIbind) , [_BioSNAP_](/Pretrian_models/BioSNAP) , and [_BindingDB_](/Pretrian_models/BindingDB) 
++ setp 2: Move the folds [_BindingDB_AIbind_](/Pretrian_models/BindingDB_AIbind) , [_BioSNAP_](/Pretrian_models/BioSNAP) , and [_BindingDB_](/Pretrian_models/BindingDB) 
 	to the [_Results_](/Train/ColdstartCPI/Results) folder; 
 
-	+ setp 3: Loading trained model and testing
-		+ python train_BindingDB_AIBind.py
++ setp 3: Loading trained model and testing
+
+	+ python train_BindingDB_AIBind.py
 	
-		The results are saved in the [_Results_](/Train/ColdstartCPI/Results) folder.
+The results are saved in the [_Results_](/Train/ColdstartCPI/Results) folder.
 		
 
 	
