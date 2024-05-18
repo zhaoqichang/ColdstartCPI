@@ -18,6 +18,7 @@ Predicting compound-protein interactions (CPIs) is a critical step in drug disco
 - [Resources](#Resources)
 - [Training and testing](#Training and testing)
 - [Reproducibility](#Reproducibility)
+- [Contact](#Contact)
 
 
 ## Installation
@@ -86,7 +87,9 @@ Check [demo](/demo) for some demo data to play with: python demo_train.py
 
 + demo_train.py: The code of demo.
 
-The results are saved in the Results folder.
+	+ python train_BindingDB_AIBind.py
+
+	The results are saved in the Results folder.
 
 ## Resources
 + README.md: this file.
@@ -176,7 +179,8 @@ The results are saved in the Results folder.
 
 + Source_Data: Source data and code used in the manuscript to plot individual figures and tables.
 
-# Training and testing
+## Training and testing
+
 + step 1: Generate the feature matrices of compounds and proteins
 	+ 1.1 For compounds:
 		+ Move the Mol2Vec-generated compound_Mol2Vec300.pkl and compound_Atom2Vec300.pkl to the feature folder in the corresponding dataset.
@@ -187,7 +191,7 @@ The results are saved in the Results folder.
 	
 	The results are saved in the [_Results_](/Train/ColdstartCPI/Results) folder.
 	
-# Reproducibility
+## Reproducibility
 
 Reproduce the reported results on BindingDB_AIBind, BioSNAP, and BindingDB under under warm start, compound cold start, protein cold start, and blind start.
 
@@ -203,7 +207,7 @@ Take BindingDB_AIBind as example:
 	
 The results are saved in the [_Results_](/Train/ColdstartCPI/Results) folder.
 
-# Contact
+## Contact
 
 If any questions, please do not hesitate to contact us at:
 
