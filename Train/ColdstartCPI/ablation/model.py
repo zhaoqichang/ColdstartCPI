@@ -156,13 +156,13 @@ class WOTransformer(nn.Module):
         predict = self.predict_layer(inter_f)
         return predict
 
-class MolTrans(nn.Sequential):
+class MolTrans_pretrain(nn.Sequential):
     '''
         Interaction Network with 2D interaction map
     '''
 
     def __init__(self, ):
-        super(MolTrans, self).__init__()
+        super(MolTrans_pretrain, self).__init__()
         self.max_d = 50
         self.max_p = 545
         self.dropout_rate = 0.1
@@ -175,13 +175,11 @@ class MolTrans(nn.Sequential):
         self.drug_decoder = nn.Sequential(
             nn.Linear(300, 384),
             nn.PReLU(),
-            nn.TransformerEncoderLayer(384, 12, batch_first=True),
         )
 
         self.protein_decoder = nn.Sequential(
             nn.Linear(1024, 384),
             nn.PReLU(),
-            nn.TransformerEncoderLayer(384, 12, batch_first=True),
         )
 
         self.decoder = nn.Sequential(
@@ -236,9 +234,9 @@ class MolTrans(nn.Sequential):
         score = self.decoder(f)
         return score
 
-class DrugBAN(nn.Module):
+class DrugBAN_pretrain(nn.Module):
     def __init__(self,drug_dim = 300,protein_dim=1024):
-        super(DrugBAN, self).__init__()
+        super(DrugBAN_pretrain, self).__init__()
         num_filters = 128
         mlp_in_dim = 256
         mlp_hidden_dim = 512
@@ -356,6 +354,8 @@ class MLPDecoder(nn.Module):
         x = self.bn3(F.relu(self.fc3(x)))
         x = self.fc4(x)
         return x
+
+
 
 if __name__ == "__main__":
     c_g_f = torch.ones([2,300]).cuda()
