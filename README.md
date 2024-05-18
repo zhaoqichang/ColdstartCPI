@@ -186,9 +186,12 @@ Take BindingDB_AIBind as example:
 + step 1: Generate the feature matrices of compounds and proteins
 	+ 1.1 For compounds:
 		+ python coldstartcpi/Pretrian_models/Mol2Vec/Mol2Vec.py
+		
 		The compound_Mol2Vec300.pkl and compound_Atom2Vec300.pkl will generated in [_feature_](/Datasets/BindingDB_AIBind/feature).
+		
 	+ 1.2 For proteins:
 		+ python coldstartcpi/Pretrian_models/Mol2Vec/Mol2Vec.py
+		
 		The aas_ProtTransBertBFD1024.pkl will generated in [_feature_](/Datasets/BindingDB_AIBind/feature).
 		
 + setp 2: Training and testing
