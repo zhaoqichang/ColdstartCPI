@@ -9,8 +9,9 @@ from gensim.models import word2vec
 import copy,pickle
 from tqdm import tqdm
 
+path = "./../../Datasets/BindingDB_AIBind/feature/"
 Drugs ={}
-with open("./drug_smiles.txt","r") as file:
+with open(path+"drug_list.txt","r") as file:
     lines = file.readlines()
     for line in lines:
         line = line.strip().split()
@@ -42,7 +43,7 @@ for drug_id in tqdm(Drugs.keys(),total=len(Drugs)):
             print("RDKit don't read {}".format(drug_id))
     except Exception as e:
         print(drug_id, e)
-with open('compound_Mol2Vec300.pkl', 'wb') as f:
+with open(path+'compound_Mol2Vec300.pkl', 'wb') as f:
     pickle.dump(drug_descriptor, f)
-with open('compound_Atom2Vec300.pkl', 'wb') as f:
+with open(path+'compound_Atom2Vec300.pkl', 'wb') as f:
     pickle.dump(drug_matrix, f)

@@ -9,7 +9,8 @@ if __name__ == "__main__":
     protein_embed_dict = {}
     embedder = ProtTransBertBFDEmbedder()
     protein_embed_dict = {}
-    with open("./protein_list.txt") as file:
+	path = "./../../Datasets/BindingDB_AIBind/feature/"
+    with open(path + "./protein_list.txt") as file:
         lines = file.readlines()
         lines = tqdm(lines, total=len(lines))
         for line in lines:
@@ -19,5 +20,5 @@ if __name__ == "__main__":
             # print(vector.shape[0])
             # protein_embed_dict[pid] = [vector, matrix]
             protein_embed_dict[pid] = vector
-    with open('./aas_ProtTransBertBFD1024.pkl'.format(matrix.shape[0]), 'wb') as f:
+    with open(path+'aas_ProtTransBertBFD1024.pkl'.format(matrix.shape[0]), 'wb') as f:
         pickle.dump(protein_embed_dict, f)

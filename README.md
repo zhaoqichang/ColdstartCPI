@@ -181,11 +181,16 @@ Check [demo](/demo) for some demo data to play with: python demo_train.py
 
 ## Training and testing
 
+Take BindingDB_AIBind as example:
+
 + step 1: Generate the feature matrices of compounds and proteins
 	+ 1.1 For compounds:
-		+ Move the Mol2Vec-generated compound_Mol2Vec300.pkl and compound_Atom2Vec300.pkl to the feature folder in the corresponding dataset.
+		+ python coldstartcpi/Pretrian_models/Mol2Vec/Mol2Vec.py
+		The compound_Mol2Vec300.pkl and compound_Atom2Vec300.pkl will generated in [_feature_](/Datasets/BindingDB_AIBind/feature).
 	+ 1.2 For proteins:
-		+ Move the ProtTrans-generated aas_ProtTransBertBFD1024.pkl to the feature folder in the corresponding dataset.
+		+ python coldstartcpi/Pretrian_models/Mol2Vec/Mol2Vec.py
+		The aas_ProtTransBertBFD1024.pkl will generated in [_feature_](/Datasets/BindingDB_AIBind/feature).
+		
 + setp 2: Training and testing
 	+ python train_BindingDB_AIBind.py
 	
