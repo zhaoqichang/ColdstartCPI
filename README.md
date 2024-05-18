@@ -35,7 +35,7 @@ ColdstartCPI is built on [Python3](https://www.python.org/) and [PyTorch](https:
 	   [tqdm](https://github.com/tqdm/tqdm) \
 	   [prefetch_generator](https://github.com/justheuristic/prefetch_generator) \
 
-	-Installation typically requires around 1 to 2 hours, depending on network conditions.
+	- Installation typically requires around 1 to 2 hours, depending on network conditions.
 
 #### System Requirements
 `ColdstartCPI` requires only a standard computer with enough RAM to support the in-memory operations. Using GPU could acceralate the training and inference of models.
@@ -43,6 +43,19 @@ ColdstartCPI is built on [Python3](https://www.python.org/) and [PyTorch](https:
 Recommended Hardware: 128 GB RAM, 40 CPU processors, 4 TB disk storage, >=30 GB GPU 
 
 Recommended OS: Linux (Ubuntu 16.04, CentOS 7, etc.)
+
+#### Option 1. One-step installation
+Install coldstartcpi, its dependencies, and other required packages in one step using [conda](https://conda.io/docs/) and [environment.yml](environment.yml):
+```shell
+# download ColdstartCPI
+git clone https://github.com/zhaoqichang/ColdstartCPI
+
+# install tools in environment.yml
+conda env create --name coldstartcpi -f /path/to/coldstartcpi/environment.yml
+
+# then the environment can be activated to use
+conda activate coldstartcpi
+```
 
 ## Trained models
 See [Pretrian_models](/Pretrian_models):
@@ -165,6 +178,16 @@ The results are saved in the Results folder.
 + setp 2: Training and testing
 	+ python train_BindingDB_AIBind.py
 	
-	The results are saved in the Results folder.
+	The results are saved in the [_Results_](/Train/ColdstartCPI/Results) folder.
 	
+# Reproducibility
++ step 1:
+
++ setp 2: Move the folds [_BindingDB_AIbind_](/Pretrian_models/BindingDB_AIbind) , [_BioSNAP_](/Pretrian_models/BioSNAP) , and [_BindingDB_](/Pretrian_models/BindingDB) 
+to the [_Results_](/Train/ColdstartCPI/Results) folder 
+
++ setp 3: Loading trained model and testing
+	+ python train_BindingDB_AIBind.py
+	
+	The results are saved in the [_Results_](/Train/ColdstartCPI/Results) folder.
 	
