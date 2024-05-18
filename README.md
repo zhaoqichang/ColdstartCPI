@@ -61,12 +61,13 @@ The trained models on BindingDB dataset:
   
 ## Demo data
 Check [demo](/demo) for some demo data to play with:
-  - _hg002.chr20_demo.hifi.bam_: HG002 demo hifi reads which are aligned to human genome chr20:10000000-10100000.
-  - _chr20_demo.fa_: reference sequence of human chr20:10000000-10100000.
-  - _hg002_bsseq_chr20_demo.bed_: HG002 BS-seq results of region chr20:10000000-10100000.
+	+ Dataset：The demo data
+	+ model.py: The model.
+	+ dataset.py
+	+ demo_train.py: The code of demo.
 
 
-## Resources:
+## Resources
 + README.md: this file.
 + Datasets: The datasets used in paper.
 	+ BindingDB_AIBind: 
@@ -149,7 +150,7 @@ Check [demo](/demo) for some demo data to play with:
 		+ train_BioSNAP_missing.py: The code of evaluation in BioSNAP with scarce data.
 		
 
-# Run:
+# Run
 + step 1: Generate the feature matrices of compounds and proteins
 	+ 1.1 For compounds:
 		+ Move the Mol2Vec-generated compound_Mol2Vec300.pkl and compound_Atom2Vec300.pkl to the feature folder in the corresponding dataset.
