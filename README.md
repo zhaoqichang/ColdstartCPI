@@ -35,6 +35,8 @@ ColdstartCPI is built on [Python3](https://www.python.org/) and [PyTorch](https:
 	   [tqdm](https://github.com/tqdm/tqdm) \
 	   [prefetch_generator](https://github.com/justheuristic/prefetch_generator) \
 
+	-Installation typically requires around 1 to 2 hours, depending on network conditions.
+
 #### System Requirements
 `ColdstartCPI` requires only a standard computer with enough RAM to support the in-memory operations. Using GPU could acceralate the training and inference of models.
 
@@ -59,7 +61,7 @@ The trained models on BindingDB dataset:
   
 ## Demo data
 
-Check [demo](/demo) for some demo data to play with:
+Check [demo](/demo) for some demo data to play with: python demo_train.py
 
 + Dataset：The demo data.
 
@@ -69,6 +71,7 @@ Check [demo](/demo) for some demo data to play with:
 
 + demo_train.py: The code of demo.
 
+The results are saved in the Results folder.
 
 ## Resources
 + README.md: this file.
