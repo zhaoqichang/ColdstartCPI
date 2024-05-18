@@ -1,0 +1,21 @@
+best_epoch:239 Loss:0.61744;Accuracy:0.92449;Precision:0.91163;Recall:0.89300;F1 score:0.90222;AUC:0.96985;PRC:0.96327.
+best_epoch:142 Loss:0.56226;Accuracy:0.91750;Precision:0.88607;Recall:0.90186;F1 score:0.89389;AUC:0.96967;PRC:0.96016.
+best_epoch:82  Loss:0.52538;Accuracy:0.91624;Precision:0.88922;Recall:0.89891;F1 score:0.89404;AUC:0.97059;PRC:0.96203.
+best_epoch:114 Loss:0.56225;Accuracy:0.91628;Precision:0.89063;Recall:0.89608;F1 score:0.89335;AUC:0.96789;PRC:0.96003.
+best_epoch:146 Loss:0.57358;Accuracy:0.92338;Precision:0.90930;Recall:0.89233;F1 score:0.90074;AUC:0.97198;PRC:0.96551.
+Trainset:
+Loss(std):0.0007(0.0008)
+Accuracy(std):0.9998(0.0002)
+Precision(std):0.9998(0.0000)
+Recall(std):0.9997(0.0000)
+F1_score(std):0.9998(0.0003)
+AUC(std):1.0000(0.0000)
+PRC(std):1.0000(0.0000)
+Testset:
+Loss(std):0.5682(0.0295)
+Accuracy(std):0.9196(0.0036)
+Precision(std):0.8974(0.0001)
+Recall(std):0.8964(0.0000)
+F1_score(std):0.8968(0.0038)
+AUC(std):0.9700(0.0013)
+PRC(std):0.9622(0.0020)

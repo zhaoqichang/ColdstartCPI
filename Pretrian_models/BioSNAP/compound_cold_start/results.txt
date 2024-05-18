@@ -1,0 +1,26 @@
+The result of train set  on 0 fold:Loss:0.03195;Accuracy:0.99108;Precision:0.99476;Recall:0.98725;F1 score:0.99099;AUC:0.99966;PRC:0.99965.
+best_epoch:31 Loss:0.74037;Accuracy:0.81196;Precision:0.86466;Recall:0.77078;F1 score:0.81502;AUC:0.90015;PRC:0.91154.
+The result of train set  on 1 fold:Loss:0.15156;Accuracy:0.94135;Precision:0.97248;Recall:0.91071;F1 score:0.94058;AUC:0.98981;PRC:0.98986.
+best_epoch:17 Loss:0.67609;Accuracy:0.78798;Precision:0.89245;Recall:0.64570;F1 score:0.74928;AUC:0.86855;PRC:0.87248.
+The result of train set  on 2 fold:Loss:0.01111;Accuracy:0.99744;Precision:0.99534;Recall:0.99955;F1 score:0.99744;AUC:0.99995;PRC:0.99995.
+best_epoch:41 Loss:1.32846;Accuracy:0.80633;Precision:0.82897;Recall:0.77883;F1 score:0.80312;AUC:0.88823;PRC:0.89813.
+The result of train set  on 3 fold:Loss:0.20032;Accuracy:0.91993;Precision:0.91913;Recall:0.92333;F1 score:0.92123;AUC:0.97662;PRC:0.97679.
+best_epoch:12 Loss:0.43310;Accuracy:0.82548;Precision:0.84989;Recall:0.78411;F1 score:0.81568;AUC:0.89828;PRC:0.90499.
+The result of train set  on 4 fold:Loss:0.19786;Accuracy:0.92380;Precision:0.91800;Recall:0.93147;F1 score:0.92469;AUC:0.97825;PRC:0.97779.
+best_epoch:11 Loss:0.52449;Accuracy:0.77929;Precision:0.82292;Recall:0.71493;F1 score:0.76513;AUC:0.86597;PRC:0.87879.
+Trainset:
+Loss(std):0.1186(0.0814)
+Accuracy(std):0.9547(0.0331)
+Precision(std):0.9599(0.0012)
+Recall(std):0.9505(0.0013)
+F1_score(std):0.9550(0.0328)
+AUC(std):0.9889(0.0100)
+PRC(std):0.9888(0.0101)
+Testset:
+Loss(std):0.7405(0.3134)
+Accuracy(std):0.8022(0.0166)
+Precision(std):0.8518(0.0006)
+Recall(std):0.7389(0.0028)
+F1_score(std):0.7896(0.0273)
+AUC(std):0.8842(0.0145)
+PRC(std):0.8932(0.0151)
