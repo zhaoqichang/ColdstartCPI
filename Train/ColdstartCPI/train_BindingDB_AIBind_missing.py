@@ -8,17 +8,28 @@ warnings.filterwarnings("ignore")
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 import random
+import os
+import pandas as pd
 from model import ColdstartCPI
 from dataset import load_BindingDB_AIBind_Miss_dataset
+from torch.utils.data import DataLoader
 from prefetch_generator import BackgroundGenerator
 from tqdm import tqdm
+import timeit
+# from tensorboardX import SummaryWriter
 import numpy as np
 import torch
 import torch.nn as nn
+import torch.optim as optim
 import torch.nn.functional as F
-from sklearn.metrics import accuracy_score, precision_score, f1_score, recall_score,precision_recall_curve
+from sklearn.metrics import roc_curve, roc_auc_score,precision_recall_curve, auc, average_precision_score
+import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score, roc_auc_score, precision_score, f1_score, recall_score,precision_recall_curve, auc
 from sklearn import metrics
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
+import argparse
+# from log.train_logger import TrainLogger
 
 def roc_auc(y,pred):
     fpr, tpr, thresholds = metrics.roc_curve(y, pred)
@@ -133,11 +144,12 @@ if __name__ == "__main__":
             random.seed(SEED)
             torch.manual_seed(SEED)
             torch.cuda.manual_seed_all(SEED)
-            print('*' * 25, 'No.', i_fold + 1, 'fold', '*' * 25)
+            print('*' * 25, 'No.', i_fold + 1, 'Fold', '*' * 25)
             train_dataset_load, valid_dataset_load, test_dataset_load = load_BindingDB_AIBind_Miss_dataset(DATASET,miss_rate = miss_rate, batch_size=Batch_size,fold=i_fold)
 
             """ create model"""
             model = ColdstartCPI(unify_num=512,head_num=4)
+            # model = nn.DataParallel(model)
             model = model.cuda()
             Loss = nn.CrossEntropyLoss(weight=None)
             patience = 0
@@ -162,13 +174,17 @@ if __name__ == "__main__":
                         input_batch, trian_labels = train_data
                         input_batch = [d.cuda() for d in input_batch]
                         trian_labels = trian_labels.cuda()
+
                         optimizer.zero_grad()
+
                         predicted_interaction = model(input_batch)
                         train_loss = Loss(predicted_interaction, trian_labels)
                         train_losses_in_epoch.append(train_loss.item())
                         train_loss.backward()
+
                         optimizer.step()
                     train_loss_a_epoch = np.average(train_losses_in_epoch)
+
 
                     """valid"""
                     valid_pbar = tqdm(

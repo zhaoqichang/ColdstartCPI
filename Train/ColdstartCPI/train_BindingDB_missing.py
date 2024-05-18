@@ -6,18 +6,17 @@
 import warnings
 warnings.filterwarnings("ignore")
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 import random
 from model import ColdstartCPI
 from dataset import load_Miss_dataset
 from prefetch_generator import BackgroundGenerator
 from tqdm import tqdm
-
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from sklearn.metrics import accuracy_score, precision_score, f1_score, recall_score,precision_recall_curve
+from sklearn.metrics import accuracy_score, precision_score, f1_score, recall_score,precision_recall_curve, auc
 from sklearn import metrics
 from sklearn.preprocessing import MinMaxScaler
 
@@ -86,8 +85,10 @@ def test_precess(model,pbar,LOSS):
     Precision = precision_score(Y, P)
     Reacll = recall_score(Y, P)
     F1_score = f1_score(Y, P)
+    # AUC = roc_auc_score(Y, S)
     AUC = roc_auc(Y,S)
     tpr, fpr, _ = precision_recall_curve(Y, S)
+    # PRC = auc(fpr, tpr)
     PRC = pr_auc(Y,S)
     Accuracy = accuracy_score(Y, P)
     test_loss = np.average(test_losses)
@@ -135,15 +136,18 @@ if __name__ == "__main__":
             random.seed(SEED)
             torch.manual_seed(SEED)
             torch.cuda.manual_seed_all(SEED)
-            print('*' * 25, 'No.', i_fold + 1, 'fold', '*' * 25)
+            print('*' * 25, 'No.', i_fold + 1, 'Fold', '*' * 25)
             train_dataset_load, valid_dataset_load, test_dataset_load = load_Miss_dataset(DATASET,miss_rate = miss_rate, batch_size=Batch_size,fold=i_fold)
+
             """ create model"""
             model = ColdstartCPI(unify_num=512,head_num=4)
+            # model = nn.DataParallel(model)
             model = model.cuda()
             Loss = nn.CrossEntropyLoss(weight=None)
             patience = 0
             best_score = 0
             best_epoch = 0
+
             optimizer = torch.optim.Adam(model.parameters(), lr=Learning_rate)
             if not os.path.exists(save_path + 'valid_best_checkpoint{}.pth'.format(i_fold)):
                 """Start training."""

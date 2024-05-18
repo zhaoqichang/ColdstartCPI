@@ -6,19 +6,30 @@
 import warnings
 warnings.filterwarnings("ignore")
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 import random
+import os
+import pandas as pd
 from model import ColdstartCPI
 from dataset import load_BindingDB_AIBind_dataset
+from torch.utils.data import DataLoader
 from prefetch_generator import BackgroundGenerator
 from tqdm import tqdm
+import timeit
+# from tensorboardX import SummaryWriter
 import numpy as np
 import torch
 import torch.nn as nn
+import torch.optim as optim
 import torch.nn.functional as F
-from sklearn.metrics import accuracy_score, precision_score, f1_score, recall_score,precision_recall_curve
+from sklearn.metrics import roc_curve, roc_auc_score,precision_recall_curve, auc, average_precision_score
+import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score, roc_auc_score, precision_score, f1_score, recall_score,precision_recall_curve, auc
 from sklearn import metrics
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
+import argparse
+# from log.train_logger import TrainLogger
 
 def roc_auc(y,pred):
     fpr, tpr, thresholds = metrics.roc_curve(y, pred)
@@ -85,8 +96,10 @@ def test_precess(model,pbar,LOSS):
     Precision = precision_score(Y, P)
     Reacll = recall_score(Y, P)
     F1_score = f1_score(Y, P)
+    # AUC = roc_auc_score(Y, S)
     AUC = roc_auc(Y,S)
     tpr, fpr, _ = precision_recall_curve(Y, S)
+    # PRC = auc(fpr, tpr)
     PRC = pr_auc(Y,S)
     Accuracy = accuracy_score(Y, P)
     test_loss = np.average(test_losses)
@@ -116,6 +129,7 @@ if __name__ == "__main__":
     torch.cuda.manual_seed_all(SEED)
     # torch.backends.cudnn.deterministic = True
     # device = torch.device('cuda:0')
+    """parameter"""
     validation = True
     Epoch = 500
     Batch_size = 256
@@ -124,9 +138,9 @@ if __name__ == "__main__":
     """Load preprocessed data."""
     DATASET = "BindingDB_AIBind"
     scenarios = "warm_start"
-    # scenarios = "drug_coldstart"
-    # scenarios = "protein_coldstart"
-    # scenarios = "pair_coldstart"
+    # scenarios = "compound_cold_start"
+    # scenarios = "protein_cold_start"
+    # scenarios = "blind_start"
 
     print("Train on {} :{}".format(DATASET, scenarios))
     save_path = "./Results/{}/{}/".format(DATASET, scenarios)
@@ -137,8 +151,8 @@ if __name__ == "__main__":
     Loss_List_train, Accuracy_List_train, Precision_List_train, Recall_List_train, F1_List_train, AUC_List_train, AUPR_List_train = [], [], [], [], [], [], []
     Loss_List_test, Accuracy_List_test, Precision_List_test, Recall_List_test, F1_List_test, AUC_List_test, AUPR_List_test = [], [], [], [], [], [], []
 
-    for i_fold in range(4,K_Fold):
-        print('*' * 25, 'No.', i_fold + 1, 'fold', '*' * 25)
+    for i_fold in range(K_Fold):
+        print('*' * 25, 'No', i_fold + 1, 'Fold', '*' * 25)
         train_dataset_load, valid_dataset_load, test_dataset_load = load_BindingDB_AIBind_dataset(DATASET,
                                                                  scenarios=scenarios,
                                                                  batch_size=Batch_size,
@@ -146,6 +160,7 @@ if __name__ == "__main__":
 
         """ create model"""
         model = ColdstartCPI(unify_num=512,head_num=4)
+        # model = nn.DataParallel(model)
         model = model.cuda()
         Loss = nn.CrossEntropyLoss(weight=None)
         patience = 0
@@ -170,13 +185,17 @@ if __name__ == "__main__":
                     input_batch, trian_labels = train_data
                     input_batch = [d.cuda() for d in input_batch]
                     trian_labels = trian_labels.cuda()
+
                     optimizer.zero_grad()
+
                     predicted_interaction = model(input_batch)
                     train_loss = Loss(predicted_interaction, trian_labels)
                     train_losses_in_epoch.append(train_loss.item())
                     train_loss.backward()
+                    # torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=10)
                     optimizer.step()
                 train_loss_a_epoch = np.average(train_losses_in_epoch)
+                # writer.add_scalar('Train Loss/{}'.format(i_fold), train_loss_a_epoch, epoch)
 
                 """valid"""
                 valid_pbar = tqdm(
@@ -189,10 +208,10 @@ if __name__ == "__main__":
                              f'patience: {patience} ' +
                              f'train_loss: {train_loss_a_epoch:.5f} ' +
                              f'valid_loss: {valid_loss_a_epoch:.5f} ' +
-                             f'valid_AUC: {AUC_dev:.5f} ' +
                              f'valid_PRC: {PRC_dev:.5f} '
                              )
                 print(print_msg)
+
                 if valid_score > best_score:
                     best_score = valid_score
                     patience = 0

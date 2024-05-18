@@ -8,16 +8,17 @@ warnings.filterwarnings("ignore")
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 import random
+import os
+import pandas as pd
 from model import ColdstartCPI
 from dataset import load_Miss_dataset
 from prefetch_generator import BackgroundGenerator
 from tqdm import tqdm
-
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from sklearn.metrics import accuracy_score, precision_score, f1_score, recall_score,precision_recall_curve
+from sklearn.metrics import accuracy_score, roc_auc_score, precision_score, f1_score, recall_score,precision_recall_curve, auc
 from sklearn import metrics
 from sklearn.preprocessing import MinMaxScaler
 
@@ -108,12 +109,10 @@ def test_model(dataset_load,save_path,DATASET, LOSS,save = False):
         .format(loss_test, Accuracy_test, Precision_test, Recall_test, F1_score_test, AUC_test, PRC_test)
     print(results)
     return results,loss_test, Accuracy_test, Precision_test, Recall_test, F1_score_test, AUC_test, PRC_test
-
 if __name__ == "__main__":
     """select seed"""
     # torch.backends.cudnn.deterministic = True
     # device = torch.device('cuda:0')
-    """参数定义"""
     validation = True
     Epoch = 500
     Batch_size = 100
@@ -135,8 +134,9 @@ if __name__ == "__main__":
             random.seed(SEED)
             torch.manual_seed(SEED)
             torch.cuda.manual_seed_all(SEED)
-            print('*' * 25, 'No.', i_fold + 1, 'fold', '*' * 25)
+            print('*' * 25, 'No.', i_fold + 1, 'Fold', '*' * 25)
             train_dataset_load, valid_dataset_load, test_dataset_load = load_Miss_dataset(DATASET,miss_rate = miss_rate, batch_size=Batch_size,fold=i_fold)
+
             """ create model"""
             model = ColdstartCPI(unify_num=512,head_num=4)
             model = model.cuda()
@@ -169,7 +169,6 @@ if __name__ == "__main__":
                         train_loss.backward()
                         optimizer.step()
                     train_loss_a_epoch = np.average(train_losses_in_epoch)
-
                     """valid"""
                     valid_pbar = tqdm(
                         enumerate(
@@ -185,6 +184,7 @@ if __name__ == "__main__":
                                  f'valid_PRC: {PRC_dev:.5f} '
                                  )
                     print(print_msg)
+
                     if valid_score > best_score:
                         best_score = valid_score
                         patience = 0
