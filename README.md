@@ -61,10 +61,13 @@ The trained models on BindingDB dataset:
 
 Check [demo](/demo) for some demo data to play with:
 
-	+ Dataset：The demo data
-	+ model.py: The model.
-	+ dataset.py
-	+ demo_train.py: The code of demo.
++ Dataset：The demo data.
+
++ model.py: The model.
+
++ dataset.py
+
++ demo_train.py: The code of demo.
 
 
 ## Resources
