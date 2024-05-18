@@ -1,0 +1,1 @@
+find . -type f -name "*.pdbqt" > ./../../5_IDs.txt
