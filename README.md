@@ -14,10 +14,8 @@ Predicting compound-protein interactions (CPIs) is a critical step in drug disco
 - [Installation](#Installation)
 - [Trained models](#Trained-models)
 - [Demo data](#Demo-data)
-- [Quick start](#Quick-start)
-- [Usage](#Usage)
-- [Acknowledgements](#Acknowledgements)
-- [TODO](#TODO)
+- [Resources](#Resources)
+- [Run](#Run)
 
 
 ## Installation
