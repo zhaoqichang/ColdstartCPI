@@ -167,11 +167,12 @@ The results are saved in the Results folder.
 		+ train_BioSNAP_S2_S3.py: The code of evaluation in BioSNAP under compound cold start and protein cold start.
 		+ train_BioSNAP_S4.py: The code of evaluation in BioSNAP under blind start.
 		+ train_BioSNAP_missing.py: The code of evaluation in BioSNAP with scarce data.
-+ Case study
 
-+ Demo
++ Case study: The raw files(PDB and pdbqt), settings and results of Docking.
 
-+ Source_Data
++ Demo: The code and data for demo.
+
++ Source_Data: Source data and code used in the manuscript to plot individual figures and tables.
 
 # Training and testing
 + step 1: Generate the feature matrices of compounds and proteins
