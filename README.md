@@ -167,9 +167,13 @@ The results are saved in the Results folder.
 		+ train_BioSNAP_S2_S3.py: The code of evaluation in BioSNAP under compound cold start and protein cold start.
 		+ train_BioSNAP_S4.py: The code of evaluation in BioSNAP under blind start.
 		+ train_BioSNAP_missing.py: The code of evaluation in BioSNAP with scarce data.
-		
++ Case study
 
-# Run
++ Demo
+
++ Source_Data
+
+# Training and testing
 + step 1: Generate the feature matrices of compounds and proteins
 	+ 1.1 For compounds:
 		+ Move the Mol2Vec-generated compound_Mol2Vec300.pkl and compound_Atom2Vec300.pkl to the feature folder in the corresponding dataset.
@@ -195,6 +199,7 @@ Take BindingDB_AIBind as example:
 	+ python train_BindingDB_AIBind.py
 	
 The results are saved in the [_Results_](/Train/ColdstartCPI/Results) folder.
+
 		
 
 	
