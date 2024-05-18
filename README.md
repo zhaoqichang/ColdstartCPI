@@ -35,7 +35,7 @@ ColdstartCPI is built on [Python3](https://www.python.org/) and [PyTorch](https:
 	   [tqdm](https://github.com/tqdm/tqdm) \
 	   [prefetch_generator](https://github.com/justheuristic/prefetch_generator) \
 
-	- Installation typically requires around 1 to 2 hours, depending on network conditions.
+   - Installation typically requires around 1 to 2 hours, depending on network conditions.
 
 #### System Requirements
 `ColdstartCPI` requires only a standard computer with enough RAM to support the in-memory operations. Using GPU could acceralate the training and inference of models.
@@ -126,14 +126,14 @@ The results are saved in the Results folder.
 	Mol2Vec is customised version of Mol2Vec(https://github.com/samoturk/mol2vec). We recode the mol2vec/feature.py to generate feature matrices of compounds.
 	
 	You will obtain the feature vectors and matrices of the compounds by following the steps below:
-	1. Place the SMILES sequence file of compounds, e.g. drug_list.txt, in the Mol2Vec folder;
+	1. Place the SMILES sequence file of compounds, e.g. drug_list.txt, in the [_Mol2Vec_](/Pretrian_models/Mol2Vec) folder;
 	2. modify the code in lines 13-17 of the Mol2Vec.py file to obtain the dictionary "Drug" with key as Compound ID and Value as SMILES.
 		
 		python Mol2Vec.py
 	
 	+ ProtTrans
 	You will obtain the feature vectors and matrices of the proteins by following the steps below:
-	1. Place the amino acid sequence file of portiens, e.g. protein_list.txt, in the ProtTrans folder;
+	1. Place the amino acid sequence file of portiens, e.g. protein_list.txt, in the [_ProtTrans_](/Pretrian_models/ProtTrans) folder;
 	2. modify the filepath in line 12 of the generator.py file and run generator.py.
 
 		python generator.py
@@ -181,13 +181,20 @@ The results are saved in the Results folder.
 	The results are saved in the [_Results_](/Train/ColdstartCPI/Results) folder.
 	
 # Reproducibility
-+ step 1:
 
-+ setp 2: Move the folds [_BindingDB_AIbind_](/Pretrian_models/BindingDB_AIbind) , [_BioSNAP_](/Pretrian_models/BioSNAP) , and [_BindingDB_](/Pretrian_models/BindingDB) 
-to the [_Results_](/Train/ColdstartCPI/Results) folder 
+Reproduce the reported results on BindingDB_AIBind, BioSNAP, and BindingDB under under warm start, compound cold start, protein cold start, and blind start.
 
-+ setp 3: Loading trained model and testing
-	+ python train_BindingDB_AIBind.py
+Take BindingDB_AIBind as example:
+
+	+ step 1: Make sure that [_feature_](/Datasets/BindingDB_AIBind/feature) already holds the pre-training feature files (i.e., compound_Atom2Vec300.pkl, compound_Mol2Vec300.pkl, and aas_ProtTransBertBFD1024.pkl) for compounds and proteins;
+
+	+ setp 2: Move the folds [_BindingDB_AIbind_](/Pretrian_models/BindingDB_AIbind) , [_BioSNAP_](/Pretrian_models/BioSNAP) , and [_BindingDB_](/Pretrian_models/BindingDB) 
+	to the [_Results_](/Train/ColdstartCPI/Results) folder; 
+
+	+ setp 3: Loading trained model and testing
+		+ python train_BindingDB_AIBind.py
 	
-	The results are saved in the [_Results_](/Train/ColdstartCPI/Results) folder.
+		The results are saved in the [_Results_](/Train/ColdstartCPI/Results) folder.
+		
+
 	
