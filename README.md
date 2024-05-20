@@ -171,13 +171,9 @@ Check [demo](/demo) for some demo data to play with: python demo_train.py
 		+ model.py: The code of ColdstartCPI.
 		+ train_BindingDB_AIBind.py: The code of evaluation in BindingDB_AIBind under warm start, compound cold start, protein cold start, and blind start.
 		+ train_BindingDB_AIBind_missing.py: The code of evaluation in BindingDB_AIBind with scarce data.
-		+ train_BindingDB_S1.py: The code of evaluation in BindingDB under warm start.
-		+ train_BindingDB_S2_S3.py: The code of evaluation in BindingDB under compound cold start and protein cold start.
-		+ train_BindingDB_S4.py: The code of evaluation in BindingDB under blind start.
+		+ train_BindingDB.py: The code of evaluation in BindingDB under warm start, compound cold start, protein cold start, and blind start.
 		+ train_BindingDB_missing.py: The code of evaluation in BindingDB with scarce data.
-		+ train_BioSNAP_S1.py: The code of evaluation in BioSNAP under warm start.
-		+ train_BioSNAP_S2_S3.py: The code of evaluation in BioSNAP under compound cold start and protein cold start.
-		+ train_BioSNAP_S4.py: The code of evaluation in BioSNAP under blind start.
+		+ train_BioSNAP.py: The code of evaluation in BioSNAP under warm start, compound cold start, protein cold start, and blind start.
 		+ train_BioSNAP_missing.py: The code of evaluation in BioSNAP with scarce data.
 
 + Case study: The raw files(PDB and pdbqt), settings and results of Docking.
