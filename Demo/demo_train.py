@@ -6,7 +6,7 @@
 import warnings
 warnings.filterwarnings("ignore")
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 import random
 from model import ColdstartCPI
 from dataset import load_dataset

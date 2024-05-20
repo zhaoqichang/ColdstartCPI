@@ -1,6 +1,8 @@
 # ColdstartCPI
 ColdstartCPI: Induced-fit theory-guided DTI predictive model with improved generalization performance
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhaoqichang/ColdstartCPI/blob/main/Demo/ColdstartCPI_demo.ipynb)
+
 This repository contains the source code and the data.
 
 Predicting compound-protein interactions (CPIs) is a critical step in drug discovery. Existing deep-learning-based methods show promising performance, but generally fail to generalize well to novel compounds and proteins due to the high sparsity of CPI data. To this end, we propose ColdstartCPI, a two-step framework that generates compound and protein representations with unsupervised pre-training, utilizes a Transformer-based structure to unify the pre-trained feature space with the CPI prediction space, and improves interactions for novel compounds and proteins. ColdstartCPI is evaluated under four realistic scenarios and achieves accurate and robust performance against state-of-the-art baselines. Furthermore, we validate the top predictions of ColdstartCPI through comparison with the experimental evidence and docking simulations. Our results indicate that ColdstartCPI provides a unified framework for integrating pre-trained models with CPI prediction tasks, which promises to be a powerful tool for drug discovery.
@@ -18,6 +20,7 @@ Predicting compound-protein interactions (CPIs) is a critical step in drug disco
 - [Resources](#Resources)
 - [Training and testing](#Training and testing)
 - [Reproducibility](#Reproducibility)
+- [Running predictions](#Reproducibility)
 - [Contact](#Contact)
 
 
@@ -76,6 +79,10 @@ The trained models on BindingDB dataset:
   - [_BindingDB_](/Pretrian_models/BindingDB)
   
 ## Demo data
+
+We provide ColdstartCPI running demo through a cloud Jupyter notebook on [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhaoqichang/ColdstartCPI/blob/main/Demo/ColdstartCPI_demo.ipynb). Note it is based on a small sample dataset due to the resource limitation of a free colab account. 
+
+The **expected output and run time** of demo has been provided in the colab notebook for verification.
 
 Check [demo](/demo) for some demo data to play with: python demo_train.py
 
