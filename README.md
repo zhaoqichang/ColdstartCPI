@@ -94,7 +94,7 @@ Check [demo](/demo) for some demo data to play with: python demo_train.py
 
 + demo_train.py: The code of demo.
 
-	+ python train_BindingDB_AIBind.py
+	+ python demo_train.py
 
 	The results are saved in the Results folder.
 
