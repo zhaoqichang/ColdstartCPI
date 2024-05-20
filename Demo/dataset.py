@@ -2,6 +2,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 import pickle
 import numpy as np
+import random
 
 class CustomDataSet(Dataset):
     def __init__(self, pairs):
@@ -79,9 +80,10 @@ def load_dataset(batch_size):
         for pair in file.readlines():
             cid, pid, label = pair.strip().split()
             data_set.append([cid, pid, label])
-    train_set = CustomDataSet(data_set)
-    val_set = CustomDataSet(data_set)
-    test_set = CustomDataSet(data_set)
+    random.shuffle(data_set)
+    train_set = CustomDataSet(data_set[:int(0.7*len(data_set))])
+    val_set = CustomDataSet(data_set[int(0.7*len(data_set)):int(0.8*len(data_set))])
+    test_set = CustomDataSet(data_set[int(0.8*len(data_set)):])
 
     drug_features = load_pickle("./Dataset/feature/compound_Mol2Vec300.pkl")
     drug_pretrain = load_pickle("./Dataset/feature/compound_Atom2Vec300.pkl")

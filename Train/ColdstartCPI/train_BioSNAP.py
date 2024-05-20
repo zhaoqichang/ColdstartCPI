@@ -6,12 +6,10 @@
 import warnings
 warnings.filterwarnings("ignore")
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 import random
-import os
-import pandas as pd
 from model import ColdstartCPI
-from dataset import load_Cold_dataset
+from dataset import load_scenario_dataset
 from prefetch_generator import BackgroundGenerator
 from tqdm import tqdm
 import numpy as np
@@ -87,10 +85,8 @@ def test_precess(model,pbar,LOSS):
     Precision = precision_score(Y, P)
     Reacll = recall_score(Y, P)
     F1_score = f1_score(Y, P)
-    # AUC = roc_auc_score(Y, S)
     AUC = roc_auc(Y,S)
     tpr, fpr, _ = precision_recall_curve(Y, S)
-    # PRC = auc(fpr, tpr)
     PRC = pr_auc(Y,S)
     Accuracy = accuracy_score(Y, P)
     test_loss = np.average(test_losses)
@@ -116,18 +112,19 @@ if __name__ == "__main__":
     """select seed"""
     # torch.backends.cudnn.deterministic = True
     # device = torch.device('cuda:0')
-    """参数定义"""
     validation = True
-    Epoch = 500
-    Batch_size = 128
+    Epoch = 5000
+    Batch_size = 256
     Learning_rate = 0.0001
-    Early_stopping_patience = 25
+    Early_stopping_patience = 5000
     """Load preprocessed data."""
-    DATASET = "BindingDB"
-    setting = "compound_cold_start"
-    # setting = "protein_cold_start"
+    DATASET = "BioSNAP"
+    scenarios = "warm_start"
+    # scenarios = "compound_cold_start"
+    # scenarios = "protein_cold_start"
+    # scenarios = "blind_start"
     print("Train on {}".format(DATASET))
-    save_path = "./Results/{}/{}/".format(DATASET,setting)
+    save_path = "./Results/{}/{}/".format(DATASET,scenarios)
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
@@ -141,7 +138,7 @@ if __name__ == "__main__":
         torch.manual_seed(SEED)
         torch.cuda.manual_seed_all(SEED)
         print('*' * 25, 'No.', i_fold + 1, 'Fold', '*' * 25)
-        train_dataset_load, valid_dataset_load, test_dataset_load = load_Cold_dataset(DATASET,setting,i_fold, batch_size=Batch_size)
+        train_dataset_load, valid_dataset_load, test_dataset_load = load_scenario_dataset(DATASET, scenarios, i_fold, batch_size=Batch_size)
 
         """ create model"""
         model = ColdstartCPI(unify_num=512,head_num=4)
@@ -153,7 +150,7 @@ if __name__ == "__main__":
         best_epoch = 0
 
         optimizer = torch.optim.Adam(model.parameters(), lr=Learning_rate)
-        if not os.path.exists(save_path + 'valid_best_checkpoint{}.pth'.format(i_fold)):
+        if not os.path.exists(save_path + 'valid_best_checkpoint{}.pth'.format(i_fold+10)):
             """Start training."""
             print('Training...')
             epoch_len = len(str(Epoch))
@@ -175,7 +172,6 @@ if __name__ == "__main__":
                     train_loss = Loss(predicted_interaction, trian_labels)
                     train_losses_in_epoch.append(train_loss.item())
                     train_loss.backward()
-
                     optimizer.step()
                 train_loss_a_epoch = np.average(train_losses_in_epoch)
 
@@ -186,7 +182,6 @@ if __name__ == "__main__":
                     total=len(valid_dataset_load))
                 _,_,valid_loss_a_epoch, _, _, _, _, AUC_dev, PRC_dev = test_precess(model,valid_pbar,Loss)
                 valid_score = AUC_dev + PRC_dev
-
                 print_msg = (f'[{epoch + 1:>{epoch_len}}/{Epoch:>{epoch_len}}] ' +
                              f'patience: {patience} ' +
                              f'train_loss: {train_loss_a_epoch:.5f} ' +
@@ -200,8 +195,7 @@ if __name__ == "__main__":
                     best_score = valid_score
                     patience = 0
                     best_epoch = epoch + 1
-                    torch.save(model.state_dict(), save_path + 'valid_best_checkpoint{}.pth'.format(i_fold))
-
+                    torch.save(model.state_dict(), save_path + 'valid_best_checkpoint{}.pth'.format(i_fold+10))
                 else:
                     patience += 1
 

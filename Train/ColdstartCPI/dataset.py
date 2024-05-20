@@ -85,31 +85,7 @@ def split_train_valid(data_df, fold, val_ratio=0.1):
 
     return train_df, val_df
 
-def load_Cross_dataset(DATASET,batch_size):
-    columns = ['head', 'tail', 'label']
-    train_df = pd.read_csv("./../../Datasets/{}/blind_start/train_set.csv".format(DATASET))[columns]
-    valid_df = pd.read_csv("./../../Datasets/{}/blind_start/valid_set.csv".format(DATASET))[columns]
-    test_df = pd.read_csv("./../../Datasets/{}/blind_start/test_set.csv".format(DATASET))[columns]
-    train_set = CustomDataSet(train_df.values)
-    val_set = CustomDataSet(valid_df.values)
-    test_set = CustomDataSet(test_df.values)
-
-    drug_features = load_pickle("./../../Datasets/{}/compound_Mol2Vec300.pkl".format(DATASET))
-    drug_pretrain = load_pickle("./../../Datasets/{}/compound_Atom2Vec300.pkl".format(DATASET))
-    protein_pretrain = load_pickle("./../../Datasets/{}/aas_ProtTransBertBFD1024.pkl".format(DATASET))
-    collate_fn = collater_embeding(drug_features, drug_pretrain, protein_pretrain)
-    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=4,
-                                    collate_fn=collate_fn)
-    val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False, num_workers=4,collate_fn=collate_fn)
-    test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=4,collate_fn=collate_fn)
-
-    print("Number of samples in the train set: ", len(train_set))
-    print("Number of samples in the validation set: ", len(val_set))
-    print("Number of samples in the test set: ", len(test_set))
-
-    return train_loader, val_loader, test_loader
-
-def load_Cold_dataset(DATASET,setting,i, batch_size):
+def load_scenario_dataset(DATASET,setting,i, batch_size):
     columns = ['head', 'tail', 'label']
     train_df = pd.read_csv("./../../Datasets/{}/{}/train_set{}.csv".format(DATASET,setting,i))[columns]
     valid_df = pd.read_csv("./../../Datasets/{}/{}/valid_set{}.csv".format(DATASET,setting,i))[columns]
@@ -127,31 +103,6 @@ def load_Cold_dataset(DATASET,setting,i, batch_size):
                                     collate_fn=collate_fn,pin_memory=True)
     val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False, num_workers=4,pin_memory=True,collate_fn=collate_fn)
     test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=4,pin_memory=True,collate_fn=collate_fn)
-
-    print("Number of samples in the train set: ", len(train_set))
-    print("Number of samples in the validation set: ", len(val_set))
-    print("Number of samples in the test set: ", len(test_set))
-
-    return train_loader, val_loader, test_loader
-
-def load_In_dataset(DATASET ,batch_size):
-    columns = ['head', 'tail', 'label']
-    train_df = pd.read_csv("./../../Datasets/{}/warm_start/train_set.csv".format(DATASET))[columns]
-    valid_df = pd.read_csv("./../../Datasets/{}/warm_start/valid_set.csv".format(DATASET))[columns]
-    test_df = pd.read_csv("./../../Datasets/{}/warm_start/test_set.csv".format(DATASET))[columns]
-    train_set = CustomDataSet(train_df.values)
-    val_set = CustomDataSet(valid_df.values)
-    test_set = CustomDataSet(test_df.values)
-
-    drug_features = load_pickle("./../../Datasets/{}/compound_Mol2Vec300.pkl".format(DATASET))
-    drug_pretrain = load_pickle("./../../Datasets/{}/compound_Atom2Vec300.pkl".format(DATASET))
-    protein_pretrain = load_pickle("./../../Datasets/{}/aas_ProtTransBertBFD1024.pkl".format(DATASET))
-    collate_fn = collater_embeding(drug_features, drug_pretrain, protein_pretrain)
-
-    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=4,
-                                    collate_fn=collate_fn)
-    val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False, num_workers=4,collate_fn=collate_fn)
-    test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=4,collate_fn=collate_fn)
 
     print("Number of samples in the train set: ", len(train_set))
     print("Number of samples in the validation set: ", len(val_set))

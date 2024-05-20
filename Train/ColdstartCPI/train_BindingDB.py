@@ -6,12 +6,9 @@
 import warnings
 warnings.filterwarnings("ignore")
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
-import random
-import os
-import pandas as pd
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 from model import ColdstartCPI
-from dataset import load_Cross_dataset
+from dataset import load_scenario_dataset
 from prefetch_generator import BackgroundGenerator
 from tqdm import tqdm
 import numpy as np
@@ -87,13 +84,11 @@ def test_precess(model,pbar,LOSS):
     Precision = precision_score(Y, P)
     Reacll = recall_score(Y, P)
     F1_score = f1_score(Y, P)
-    # AUC = roc_auc_score(Y, S)
     AUC = roc_auc(Y,S)
     tpr, fpr, _ = precision_recall_curve(Y, S)
-    # PRC = auc(fpr, tpr)
     PRC = pr_auc(Y,S)
     Accuracy = accuracy_score(Y, P)
-    test_loss = np.average(test_losses)  # 一次epoch的平均验证loss
+    test_loss = np.average(test_losses)
     return Y, P, test_loss, Accuracy, Precision, Reacll, F1_score, AUC, PRC
 
 def test_model(dataset_load,save_path,DATASET, LOSS,save = False):
@@ -119,13 +114,16 @@ if __name__ == "__main__":
     validation = True
     Epoch = 500
     Batch_size = 256
-    Learning_rate = 0.0001
+    Learning_rate = 3e-4
     Early_stopping_patience = 25
     """Load preprocessed data."""
-    DATASET = "BioSNAP"
-
+    DATASET = "BindingDB"
+    scenarios = "warm_start"
+    # scenarios = "compound_cold_start"
+    # scenarios = "protein_cold_start"
+    # scenarios = "blind_start"
     print("Train on {}".format(DATASET))
-    save_path = "./Results/{}/blind_start/".format(DATASET)
+    save_path = "./Results/{}/{}/".format(DATASET,scenarios)
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
@@ -134,15 +132,16 @@ if __name__ == "__main__":
     Loss_List_test, Accuracy_List_test, Precision_List_test, Recall_List_test, F1_List_test, AUC_List_test, AUPR_List_test = [], [], [], [], [], [], []
 
     for i_fold in range(K_Fold):
-        SEED = i_fold
-        random.seed(SEED)
-        torch.manual_seed(SEED)
-        torch.cuda.manual_seed_all(SEED)
+        # SEED = i_fold
+        # random.seed(SEED)
+        # torch.manual_seed(SEED)
+        # torch.cuda.manual_seed_all(SEED)
         print('*' * 25, 'No.', i_fold + 1, 'Fold', '*' * 25)
-        train_dataset_load, valid_dataset_load, test_dataset_load = load_Cross_dataset(DATASET, batch_size=Batch_size)
+        train_dataset_load, valid_dataset_load, test_dataset_load = load_scenario_dataset(DATASET, scenarios, i_fold, batch_size=Batch_size)
 
         """ create model"""
         model = ColdstartCPI(unify_num=512,head_num=4)
+        # model = nn.DataParallel(model)
         model = model.cuda()
         Loss = nn.CrossEntropyLoss(weight=None)
         patience = 0
@@ -172,6 +171,7 @@ if __name__ == "__main__":
                     train_loss = Loss(predicted_interaction, trian_labels)
                     train_losses_in_epoch.append(train_loss.item())
                     train_loss.backward()
+                    # torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=10)
                     optimizer.step()
                 train_loss_a_epoch = np.average(train_losses_in_epoch)
 
