@@ -69,7 +69,8 @@ pip install bio-embeddings[all]
 # install other tools in requirements.txt
 pip install -r requirements.txt
 
-# install pytorch
+# Install pytorch according to hardware
+
 conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 cudatoolkit=11.3 -c pytorch
 
 # or
@@ -160,6 +161,21 @@ conda install pytorch==1.9.1 torchvision==0.10.1 torchaudio==0.9.1 cudatoolkit=1
 
 + Demo: The code and data for demo.
 
++ Predictions: 
+
+Provides trained models and scripts to predict CPIs between user-submitted compound libraries and protein libraries.
+
+	+ Custom_Data: Reference (default) data
+		+ default
+			+ drug_list.txt: Standard format for compound libraries.
+			+ protein_list.txt: Standard format for protein libraries.
+	
+	+ checkpoint.pth: Trained model.
+	+ Mol2Vec
+	+ predictor.py: Prediction Script.
+	+ model.py
+	+ dataset.py
+
 + Source_Data: Source data and code used in the manuscript to plot individual figures and tables.
 
 ## Demo data
@@ -223,7 +239,44 @@ The results are saved in the [_Results_](/Train/ColdstartCPI/Results) folder.
 
 ### Predictions
 
+We provide the trained model and scripts to predict the interactions between custom compounds and proteins.
 
+You can previde a txt file for custom compounds and a txt file for custom proteins, as follows:
+
+For compounds:
+
+	```
+	Compound_ID_ID Compound_SMILES 
+	DB00303 [H][C@]12[C@@H]... 
+	DB00114 CC1=NC=C(COP(O)... 
+	DB00117 N[C@@H](CC1=CNC... 
+	...
+	...
+	...
+	DB00441 NC1=NC(=O)N(C=C... 
+	DB08532 FC1=CC=CC=C1C1=... 
+
+	```
+For proteins:
+	```
+	Protein_ID Amino_acid_sequence 
+	P45059 MVKFNSSRKSGKSKKTIRKLT... 
+	P19113 MMEPEEYRERGREMVDYICQY... 
+	P19113 MMEPEEYRERGREMVDYICQY... 
+	...
+	...
+	...
+	P48050 MHGHSRNGQAHVPRRKRRNRF... 
+	O00341 MVPHAILARGRDVCRRNGLLI... 
+
+	```	
+For details on the exact format of the TXT file, please see [_Custom_Data/default_](/Predictions/Custom_Data/default) folder.
+
+Simple usage example:
+
++ python ./Predictions/predictor.py --compound_path path/to/customed_compounds.txt --protein_path path/to/customed_compounds.txt --identifier identifier
+
+"identifier" is an identifier for this run. And the results are saved in the "./Predictions/identifier" folder.
 
 ## Contact
 
