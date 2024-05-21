@@ -15,7 +15,6 @@ Predicting compound-protein interactions (CPIs) is a critical step in drug disco
 
 ## Contents
 - [Installation](#Installation)
-- [Trained models](#Trained-models)
 - [Demo data](#Demo-data)
 - [Resources](#Resources)
 - [Reproducibility](#Reproducibility)
@@ -61,21 +60,6 @@ conda env create --name coldstartcpi -f /path/to/coldstartcpi/environment.yml
 # then the environment can be activated to use
 conda activate coldstartcpi
 ```
-
-## Trained models
-See [Pretrian_models](/Pretrian_models):
-
-For the `Pre-trained` module:
-  - [_model_300dim.pkl_](/Pretrian_models/Mol2Vec/model_300dim.pkl): This is an embedded pre-trained model for each substructure in the compound.  
-  
-The trained models on BindingDB_AIbind dataset:
-  - [_BindingDB_AIbind_](/Pretrian_models/BindingDB_AIbind)
-  
-The trained models on BioSNAP dataset:
-  - [_BioSNAP_](/Pretrian_models/BioSNAP)
-
-The trained models on BindingDB dataset:
-  - [_BindingDB_](/Pretrian_models/BindingDB)
   
 ## Demo data
 
@@ -131,23 +115,23 @@ Check [demo](/demo) for some demo data to play with: python demo_train.py
 			+ drug_list.txt: The SMILES strings of compounds
 			+ protein_list.txt: Amino acid sequences of proteins
 		+ full_pair.csv: The full dataset with positives and negatives for performance evaluation with scarce data.
-+ Pretrian_models
+		
++ Feature_generation
+
 	+ Mol2Vec
 	
 	Mol2Vec is customised version of Mol2Vec(https://github.com/samoturk/mol2vec). We recode the mol2vec/feature.py to generate feature matrices of compounds.
 	
-	You will obtain the feature vectors and matrices of the compounds by following the steps below:
-	1. Place the SMILES sequence file of compounds, e.g. drug_list.txt, in the [_Mol2Vec_](/Pretrian_models/Mol2Vec) folder;
-	2. modify the code in lines 13-17 of the Mol2Vec.py file to obtain the dictionary "Drug" with key as Compound ID and Value as SMILES.
-		
-		python Mol2Vec.py
+	You will obtain the feature vectors and matrices of the compounds by following command. **dataname** should be BindingDB_AIBind, BioSNAP, and BindingDB.
+
+		python Mol2Vec.py --dataset dataname
 	
 	+ ProtTrans
-	You will obtain the feature vectors and matrices of the proteins by following the steps below:
-	1. Place the amino acid sequence file of portiens, e.g. protein_list.txt, in the [_ProtTrans_](/Pretrian_models/ProtTrans) folder;
-	2. modify the filepath in line 12 of the generator.py file and run generator.py.
-
-		python generator.py
+	You will obtain the feature vectors and matrices of the proteins by following command. **dataname** should be BindingDB_AIBind, BioSNAP, and BindingDB.
+	
+		python generator.py --dataset dataname
+		
++ Pretrian_models
 		
 	+ BindingDB_AIbind: The trained models on BindingDB_AIbind dataset.
 	
