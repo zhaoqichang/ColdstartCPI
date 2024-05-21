@@ -8,28 +8,18 @@ warnings.filterwarnings("ignore")
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 import random
-import os
-import pandas as pd
 from model import ColdstartCPI
 from dataset import load_BindingDB_AIBind_Miss_dataset
-from torch.utils.data import DataLoader
 from prefetch_generator import BackgroundGenerator
 from tqdm import tqdm
-import timeit
-# from tensorboardX import SummaryWriter
 import numpy as np
 import torch
 import torch.nn as nn
-import torch.optim as optim
 import torch.nn.functional as F
-from sklearn.metrics import roc_curve, roc_auc_score,precision_recall_curve, auc, average_precision_score
-import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, roc_auc_score, precision_score, f1_score, recall_score,precision_recall_curve, auc
 from sklearn import metrics
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
 import argparse
-# from log.train_logger import TrainLogger
+
 
 def roc_auc(y,pred):
     fpr, tpr, thresholds = metrics.roc_curve(y, pred)

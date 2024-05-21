@@ -18,9 +18,8 @@ Predicting compound-protein interactions (CPIs) is a critical step in drug disco
 - [Trained models](#Trained-models)
 - [Demo data](#Demo-data)
 - [Resources](#Resources)
-- [Training and testing](#Training and testing)
 - [Reproducibility](#Reproducibility)
-- [Running predictions](#Reproducibility)
+- [Running predictions](#Running predictions)
 - [Contact](#Contact)
 
 
@@ -182,31 +181,33 @@ Check [demo](/demo) for some demo data to play with: python demo_train.py
 
 + Source_Data: Source data and code used in the manuscript to plot individual figures and tables.
 
-## Training and testing
+## Reproducibility
 
-Take BindingDB_AIBind as example:
+### Reproducibility with training
+
+For the warm start experiment on the BindingDB_AIBind dataset, you can directly run the following setps.
 
 + step 1: Generate the feature matrices of compounds and proteins
 	+ 1.1 For compounds:
-		+ python coldstartcpi/Pretrian_models/Mol2Vec/Mol2Vec.py
+	
+		+ python coldstartcpi/Pretrian_models/Mol2Vec/Mol2Vec.py --dataset BindingDB_AIBind
 		
 		The compound_Mol2Vec300.pkl and compound_Atom2Vec300.pkl will generated in [_feature_](/Datasets/BindingDB_AIBind/feature).
 		
 	+ 1.2 For proteins:
-		+ python coldstartcpi/Pretrian_models/ProtTrans/generator.py
+		+ python coldstartcpi/Pretrian_models/ProtTrans/generator.py --dataset BindingDB_AIBind
 		
 		The aas_ProtTransBertBFD1024.pkl will generated in [_feature_](/Datasets/BindingDB_AIBind/feature).
 		
 + setp 2: Training and testing
-	+ python train_BindingDB_AIBind.py
+
+	+ python train_BindingDB_AIBind.py --scenarios warm_start
 	
 	The results are saved in the [_Results_](/Train/ColdstartCPI/Results) folder.
 	
-## Reproducibility
+### Reproducibility without training
 
-Reproduce the reported results on BindingDB_AIBind, BioSNAP, and BindingDB under under warm start, compound cold start, protein cold start, and blind start.
-
-Take BindingDB_AIBind as example:
+We also provide models that have been trained for direct testing. For the warm start experiment on the BindingDB_AIBind dataset, you can directly run the following setps.
 
 + step 1: Make sure that [_feature_](/Datasets/BindingDB_AIBind/feature) already holds the pre-training feature files (i.e., compound_Atom2Vec300.pkl, compound_Mol2Vec300.pkl, and aas_ProtTransBertBFD1024.pkl) for compounds and proteins;
 
@@ -214,7 +215,7 @@ Take BindingDB_AIBind as example:
 
 + setp 3: Loading trained model and testing
 
-	+ python train_BindingDB_AIBind.py
+	+ python train_BindingDB_AIBind.py --scenarios warm_start
 	
 The results are saved in the [_Results_](/Train/ColdstartCPI/Results) folder.
 

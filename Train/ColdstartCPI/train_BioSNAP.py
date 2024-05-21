@@ -18,7 +18,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from sklearn.metrics import accuracy_score, roc_auc_score, precision_score, f1_score, recall_score,precision_recall_curve, auc
 from sklearn import metrics
-from sklearn.preprocessing import MinMaxScaler
+import argparse
 
 def roc_auc(y,pred):
     fpr, tpr, thresholds = metrics.roc_curve(y, pred)
@@ -109,6 +109,14 @@ def test_model(dataset_load,save_path,DATASET, LOSS,save = False):
     return results,loss_test, Accuracy_test, Precision_test, Recall_test, F1_score_test, AUC_test, PRC_test
 
 if __name__ == "__main__":
+
+    parse = argparse.ArgumentParser()
+    parse.add_argument('--scenarios', type=str, default="warm_start",
+                       choices=['warm_start', 'compound_cold_start', 'protein_cold_start','blind_start'],
+                       help='the scenario of experiment setting')
+    opt = parse.parse_args()
+    scenarios = opt.scenarios
+
     """select seed"""
     # torch.backends.cudnn.deterministic = True
     # device = torch.device('cuda:0')
@@ -120,9 +128,6 @@ if __name__ == "__main__":
     """Load preprocessed data."""
     DATASET = "BioSNAP"
     scenarios = "warm_start"
-    # scenarios = "compound_cold_start"
-    # scenarios = "protein_cold_start"
-    # scenarios = "blind_start"
     print("Train on {}".format(DATASET))
     save_path = "./Results/{}/{}/".format(DATASET,scenarios)
     if not os.path.exists(save_path):

@@ -8,28 +8,18 @@ warnings.filterwarnings("ignore")
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 import random
-import os
-import pandas as pd
 from model import ColdstartCPI
 from dataset import load_BindingDB_AIBind_dataset
-from torch.utils.data import DataLoader
 from prefetch_generator import BackgroundGenerator
 from tqdm import tqdm
-import timeit
-# from tensorboardX import SummaryWriter
 import numpy as np
 import torch
 import torch.nn as nn
-import torch.optim as optim
 import torch.nn.functional as F
-from sklearn.metrics import roc_curve, roc_auc_score,precision_recall_curve, auc, average_precision_score
-import matplotlib.pyplot as plt
-from sklearn.metrics import accuracy_score, roc_auc_score, precision_score, f1_score, recall_score,precision_recall_curve, auc
+from sklearn.metrics import accuracy_score, precision_score, f1_score, recall_score,precision_recall_curve, auc
 from sklearn import metrics
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
 import argparse
-# from log.train_logger import TrainLogger
+
 
 def roc_auc(y,pred):
     fpr, tpr, thresholds = metrics.roc_curve(y, pred)
@@ -122,6 +112,14 @@ def test_model(dataset_load,save_path,DATASET, LOSS,save = False):
     return results,loss_test, Accuracy_test, Precision_test, Recall_test, F1_score_test, AUC_test, PRC_test
 
 if __name__ == "__main__":
+
+    parse = argparse.ArgumentParser()
+    parse.add_argument('--scenarios', type=str, default="warm_start",
+                       choices=['warm_start', 'compound_cold_start', 'protein_cold_start','blind_start'],
+                       help='the scenario of experiment setting')
+    opt = parse.parse_args()
+    scenarios = opt.scenarios
+
     """select seed"""
     SEED = 1234
     random.seed(SEED)
@@ -137,11 +135,6 @@ if __name__ == "__main__":
     Early_stopping_patience = 50
     """Load preprocessed data."""
     DATASET = "BindingDB_AIBind"
-    scenarios = "warm_start"
-    # scenarios = "compound_cold_start"
-    # scenarios = "protein_cold_start"
-    # scenarios = "blind_start"
-
     print("Train on {} :{}".format(DATASET, scenarios))
     save_path = "./Results/{}/{}/".format(DATASET, scenarios)
     if not os.path.exists(save_path):

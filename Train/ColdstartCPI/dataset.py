@@ -93,10 +93,14 @@ def load_scenario_dataset(DATASET,setting,i, batch_size):
     train_set = CustomDataSet(train_df.values)
     val_set = CustomDataSet(valid_df.values)
     test_set = CustomDataSet(test_df.values)
-
-    drug_features = load_pickle("./../../Datasets/{}/compound_Mol2Vec300.pkl".format(DATASET))
-    drug_pretrain = load_pickle("./../../Datasets/{}/compound_Atom2Vec300.pkl".format(DATASET))
-    protein_pretrain = load_pickle("./../../Datasets/{}/aas_ProtTransBertBFD1024.pkl".format(DATASET))
+    try:
+        drug_features = load_pickle("./../../Datasets/{}/compound_Mol2Vec300.pkl".format(DATASET))
+        drug_pretrain = load_pickle("./../../Datasets/{}/compound_Atom2Vec300.pkl".format(DATASET))
+        protein_pretrain = load_pickle("./../../Datasets/{}/aas_ProtTransBertBFD1024.pkl".format(DATASET))
+    except:
+        print("Pre-training features for compounds and proteins are not found in the {}/feature folder, \n\
+        please check the file naming or run Mol2Vec.py and generator.py first.".format(DATASET))
+        raise
     collate_fn = collater_embeding(drug_features, drug_pretrain, protein_pretrain)
 
     train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=4,
@@ -118,10 +122,14 @@ def load_Miss_dataset(DATASET,miss_rate, batch_size, fold=0):
     train_set = CustomDataSet(train_df.values)
     val_set = CustomDataSet(val_df.values)
     test_set = CustomDataSet(test_df.values)
-
-    drug_features = load_pickle("./../../Datasets/{}/feature/compound_Mol2Vec300.pkl".format(DATASET))
-    drug_pretrain = load_pickle("./../../Datasets/{}/feature/compound_Atom2Vec300.pkl".format(DATASET))
-    protein_pretrain = load_pickle("./../../Datasets/{}/feature/aas_ProtTransBertBFD1024.pkl".format(DATASET))
+    try:
+        drug_features = load_pickle("./../../Datasets/{}/feature/compound_Mol2Vec300.pkl".format(DATASET))
+        drug_pretrain = load_pickle("./../../Datasets/{}/feature/compound_Atom2Vec300.pkl".format(DATASET))
+        protein_pretrain = load_pickle("./../../Datasets/{}/feature/aas_ProtTransBertBFD1024.pkl".format(DATASET))
+    except:
+        print("Pre-training features for compounds and proteins are not found in the {}/feature folder, \n\
+        please check the file naming or run Mol2Vec.py and generator.py first.".format(DATASET))
+        raise
     collate_fn = collater_embeding(drug_features, drug_pretrain, protein_pretrain)
 
     train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=4,
@@ -159,9 +167,14 @@ def load_BindingDB_AIBind_dataset(DATASET,scenarios, batch_size, fold=0):
     val_set = CustomDataSet(val_data_list)
     test_set = CustomDataSet(test_data_list)
     print("load feature")
-    drug_features = load_pickle("./../../Datasets/{}/feature/compound_Mol2Vec300.pkl".format(DATASET))
-    drug_pretrain = load_pickle("./../../Datasets/{}/feature/compound_Atom2Vec300.pkl".format(DATASET))
-    protein_pretrain = load_pickle("./../../Datasets/{}/feature/aas_ProtTransBertBFD1024.pkl".format(DATASET))
+    try:
+        drug_features = load_pickle("./../../Datasets/{}/feature/compound_Mol2Vec300.pkl".format(DATASET))
+        drug_pretrain = load_pickle("./../../Datasets/{}/feature/compound_Atom2Vec300.pkl".format(DATASET))
+        protein_pretrain = load_pickle("./../../Datasets/{}/feature/aas_ProtTransBertBFD1024.pkl".format(DATASET))
+    except:
+        print("Pre-training features for compounds and proteins are not found in the {}/feature folder, \n\
+        please check the file naming or run Mol2Vec.py and generator.py first.".format(DATASET))
+        raise
     collate_fn = collater_embeding(drug_features, drug_pretrain, protein_pretrain)
     print("feature load done")
     train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=4,
@@ -202,10 +215,14 @@ def load_BindingDB_AIBind_Miss_dataset(DATASET,miss_rate, batch_size, fold=0):
     train_set = CustomDataSet(train_data_list)
     val_set = CustomDataSet(val_data_list)
     test_set = CustomDataSet(test_data_list)
-
-    drug_features = load_pickle("./../../Datasets/{}/feature/compound_Mol2Vec300.pkl".format(DATASET))
-    drug_pretrain = load_pickle("./../../Datasets/{}/feature/compound_Atom2Vec300.pkl".format(DATASET))
-    protein_pretrain = load_pickle("./../../Datasets/{}/feature/aas_ProtTransBertBFD1024.pkl".format(DATASET))
+    try:
+        drug_features = load_pickle("./../../Datasets/{}/feature/compound_Mol2Vec300.pkl".format(DATASET))
+        drug_pretrain = load_pickle("./../../Datasets/{}/feature/compound_Atom2Vec300.pkl".format(DATASET))
+        protein_pretrain = load_pickle("./../../Datasets/{}/feature/aas_ProtTransBertBFD1024.pkl".format(DATASET))
+    except:
+        print("Pre-training features for compounds and proteins are not found in the {}/feature folder, \n\
+        please check the file naming or run Mol2Vec.py and generator.py first.".format(DATASET))
+        raise
     collate_fn = collater_embeding(drug_features, drug_pretrain, protein_pretrain)
 
     train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=4,
@@ -230,7 +247,6 @@ if __name__ == "__main__":
     data = pd.read_csv(data_path)[columns].values
     data = CustomDataSet(data)
 
-    print("""读取预训练特征""")
     drug_features = load_pickle("./../../Datasets/{}/feature/compound_Mol2Vec300.pkl".format(DATASET))
     drug_pretrain = load_pickle("./../../Datasets/{}/feature/compound_Atom2Vec300.pkl".format(DATASET))
     protein_pretrain = load_pickle("./../../Datasets/{}/feature/aas_ProtTransBertBFD1024.pkl".format(DATASET))

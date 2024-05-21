@@ -4,12 +4,19 @@ import numpy as np
 import pickle
 from tqdm import tqdm
 from bio_embeddings.embed import SeqVecEmbedder, ProtTransBertBFDEmbedder
+import argparse
+
 
 if __name__ == "__main__":
+    parse = argparse.ArgumentParser()
+    parse.add_argument('--dataset', type=str, default="BindingDB_AIBind",
+                       choices=['BindingDB_AIBind', 'BioSNAP', 'BindingDB'],
+                       help='the scenario of experiment setting')
+    opt = parse.parse_args()
+    Dataset = opt.dataset
     protein_embed_dict = {}
     embedder = ProtTransBertBFDEmbedder()
-    protein_embed_dict = {}
-	path = "./../../Datasets/BindingDB_AIBind/feature/"
+    path = "./../../Datasets/{}/feature/".format(Dataset)
     with open(path + "./protein_list.txt") as file:
         lines = file.readlines()
         lines = tqdm(lines, total=len(lines))
@@ -20,5 +27,5 @@ if __name__ == "__main__":
             # print(vector.shape[0])
             # protein_embed_dict[pid] = [vector, matrix]
             protein_embed_dict[pid] = vector
-    with open(path+'aas_ProtTransBertBFD1024.pkl'.format(matrix.shape[0]), 'wb') as f:
+    with open(path+'aas_ProtTransBertBFD1024.pkl', 'wb') as f:
         pickle.dump(protein_embed_dict, f)
