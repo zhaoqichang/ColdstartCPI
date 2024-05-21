@@ -1,5 +1,4 @@
 rdkit-pypi==2022.9.4
-numpy==1.22
 gensim==3.8.3
 mol2vec
 scikit-learn==0.24.0
