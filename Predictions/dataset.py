@@ -8,7 +8,7 @@ from rdkit import Chem
 from Mol2Vec.mol2vec.features import mol2alt_sentence, MolSentence, Atom2Substructure
 from gensim.models import word2vec
 from bio_embeddings.embed import ProtTransBertBFDEmbedder
-
+from tqdm import tqdm
 class CustomDataSet(Dataset):
     def __init__(self, pairs):
         self.pairs = pairs
@@ -84,8 +84,9 @@ def load_dataset(compound_path,protein_path, batch_size=1):
     unseen_vec = drug_model.wv.word_vec(unseen)
     drug_descriptor = {}
     drug_matrix = {}
+    print("")
     with open(compound_path,"r") as file:
-        for line in file.readlines():
+        for line in tqdm(file.readlines(),total=len(file.readlines())):
             cid, smiles = line.strip().split()
             try:
                 mol = Chem.MolFromSmiles(smiles)
@@ -110,7 +111,7 @@ def load_dataset(compound_path,protein_path, batch_size=1):
     protein_embed_dict = {}
     embedder = ProtTransBertBFDEmbedder()
     with open(protein_path,"r") as file:
-        for line in file.readlines():
+        for line in tqdm(file.readlines(),total=len(file.readlines())):
             pid, aas = line.strip().split()
             matrix = np.array(embedder.embed(aas))
             vector = np.array(embedder.reduce_per_protein(matrix))

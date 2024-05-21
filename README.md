@@ -49,7 +49,7 @@ Recommended Hardware: 128 GB RAM, 40 CPU processors, 4 TB disk storage, >=30 GB 
 
 Recommended OS: Linux (Ubuntu 16.04, CentOS 7, etc.)
 
-#### One-step installation
+#### Installation
 Install coldstartcpi, its dependencies, and other required packages in one step using [conda](https://conda.io/docs/) and [environment.yml](environment.yml):
 ```shell
 # download ColdstartCPI
@@ -63,7 +63,8 @@ conda create -n coldstartcpi python=3.8
 conda activate coldstartcpi
 
 # install bio_embeddings
-pip install bio_embeddings[all]
+pip install bio-embeddings
+pip install bio-embeddings[prottrans]
 
 # install tools in requirements.txt
 pip install -r requirements.txt

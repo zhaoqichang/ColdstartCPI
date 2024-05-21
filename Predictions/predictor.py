@@ -31,18 +31,24 @@ if __name__ == "__main__":
     parse = argparse.ArgumentParser()
     parse.add_argument('--batch_size', type=int,
                        help='Set the batch_size according to the size of your GPU memory.')
+    parse.add_argument('--compound_path', type=str, default="./Custom_Data/default/drug_list.txt",
+                       help='the path of compounds')
+    parse.add_argument('--protein_path', type=str, default="./Custom_Data/default/protein_list.txt",
+                       help='the path of proteins')
     parse.add_argument('--identifier', type=int,
                        help='The identifier of this run.')
     opt = parse.parse_args()
     batch_size = opt.batch_size
     identifier = opt.identifier
+    compound_path = opt.compound_path
+    protein_path = opt.protein_path
 
     save_path = "./Prediction/{}/".format(identifier)
     if not os.path.exists(save_path):
         os.makedirs(save_path)
     print("loading input files.")
     print("This will take some time as Mol2Vec and Bio_embedding need to be called to extract the features of compounds and proteins.")
-    dataset_load = load_dataset(identifier = identifier, batch_size=batch_size)
+    dataset_load = load_dataset(compound_path,protein_path,batch_size=batch_size)
     """ create model"""
     model = ColdstartCPI(unify_num=512,head_num=4)
     model.load_state_dict(torch.load('./checkpoint.pth'))
