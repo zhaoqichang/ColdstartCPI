@@ -174,12 +174,12 @@ For the warm start experiment on the BindingDB_AIBind dataset, you can directly 
 + step 1: Generate the feature matrices of compounds and proteins
 	+ 1.1 For compounds:
 	
-		+ python coldstartcpi/Pretrian_models/Mol2Vec/Mol2Vec.py --dataset BindingDB_AIBind
+		+ python coldstartcpi/Feature_generation/Mol2Vec/Mol2Vec.py --dataset BindingDB_AIBind
 		
 		The compound_Mol2Vec300.pkl and compound_Atom2Vec300.pkl will generated in [_feature_](/Datasets/BindingDB_AIBind/feature).
 		
 	+ 1.2 For proteins:
-		+ python coldstartcpi/Pretrian_models/ProtTrans/generator.py --dataset BindingDB_AIBind
+		+ python coldstartcpi/Feature_generation/ProtTrans/generator.py --dataset BindingDB_AIBind
 		
 		The aas_ProtTransBertBFD1024.pkl will generated in [_feature_](/Datasets/BindingDB_AIBind/feature).
 		
