@@ -7,7 +7,7 @@ import os,pickle
 from rdkit import Chem
 from Mol2Vec.mol2vec.features import mol2alt_sentence, MolSentence, Atom2Substructure
 from gensim.models import word2vec
-from bio_embeddings.embed import SeqVecEmbedder, ProtTransBertBFDEmbedder
+from bio_embeddings.embed import ProtTransBertBFDEmbedder
 
 class CustomDataSet(Dataset):
     def __init__(self, pairs):

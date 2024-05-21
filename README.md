@@ -62,6 +62,9 @@ conda create -n coldstartcpi python=3.8
 # then the environment can be activated to use
 conda activate coldstartcpi
 
+# install bio_embeddings
+pip install bio_embeddings[all]
+
 # install tools in requirements.txt
 pip install -r requirements.txt
 ```
