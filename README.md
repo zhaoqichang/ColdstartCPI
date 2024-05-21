@@ -18,7 +18,7 @@ Predicting compound-protein interactions (CPIs) is a critical step in drug disco
 - [Demo data](#Demo-data)
 - [Resources](#Resources)
 - [Reproducibility](#Reproducibility)
-- [Predictions](#Predictions)
+- [Prediction](#Prediction)
 - [Contact](#Contact)
 
 
@@ -50,7 +50,7 @@ Recommended Hardware: 128 GB RAM, 40 CPU processors, 4 TB disk storage, >=30 GB 
 Recommended OS: Linux (Ubuntu 16.04, CentOS 7, etc.)
 
 #### Installation
-Install coldstartcpi, its dependencies, and other required packages in one step using [conda](https://conda.io/docs/) and [environment.yml](environment.yml):
+
 ```shell
 # download ColdstartCPI
 git clone https://github.com/zhaoqichang/ColdstartCPI
@@ -70,9 +70,7 @@ pip install bio-embeddings[all]
 pip install -r requirements.txt
 
 # Install pytorch according to hardware
-
 conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 cudatoolkit=11.3 -c pytorch
-
 # or
 conda install pytorch==1.9.1 torchvision==0.10.1 torchaudio==0.9.1 cudatoolkit=10.2 -c pytorch
 
@@ -237,7 +235,7 @@ We also provide models that have been trained for direct testing. For the warm s
 	
 The results are saved in the [_Results_](/Train/ColdstartCPI/Results) folder.
 
-### Predictions
+### Prediction
 
 We provide the trained model and scripts to predict the interactions between custom compounds and proteins.
 
