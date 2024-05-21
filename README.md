@@ -64,6 +64,7 @@ conda activate coldstartcpi
 
 # install bio_embeddings
 pip install bio-embeddings==0.2.2
+pip install bio-embeddings[all]
 
 # install tools in requirements.txt
 pip install -r requirements.txt
