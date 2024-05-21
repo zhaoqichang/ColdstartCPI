@@ -32,7 +32,7 @@ ColdstartCPI is built on [Python3](https://www.python.org/) and [PyTorch](https:
        [bio_embeddings](https://github.com/sacdallago/bio_embeddings) \
        [CUDA Toolkit](https://anaconda.org/anaconda/cudatoolkit) (version>=10.2, for GPU only)
    - Dependencies: \
-       [PyTorch](https://pytorch.org/) (version >=1.9.0, <=2.1.0) \
+       [PyTorch](https://pytorch.org/) (version >=1.9.0, <=1.16.0) \
 	   [numpy](http://www.numpy.org/) (version = 1.18.3)\
 	   [scikit-learn](https://scikit-learn.org/stable/) (version = 1.0.2)\
 	   [pandas](https://github.com/pandas-dev/pandas) (version = 1.0.1)\
@@ -74,8 +74,6 @@ conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 cudatoolkit
 
 # or
 conda install pytorch==1.9.1 torchvision==0.10.1 torchaudio==0.9.1 cudatoolkit=10.2 -c pytorch
-
-
 
 ```
   
@@ -222,6 +220,10 @@ We also provide models that have been trained for direct testing. For the warm s
 	+ python train_BindingDB_AIBind.py --scenarios warm_start
 	
 The results are saved in the [_Results_](/Train/ColdstartCPI/Results) folder.
+
+### Predictions
+
+
 
 ## Contact
 

@@ -35,7 +35,7 @@ if __name__ == "__main__":
                        help='the path of compounds')
     parse.add_argument('--protein_path', type=str, default="./Custom_Data/default/protein_list.txt",
                        help='the path of proteins')
-    parse.add_argument('--identifier', type=int,default="default",
+    parse.add_argument('--identifier', type=str, default="default",
                        help='The identifier of this run.')
     opt = parse.parse_args()
     batch_size = opt.batch_size
