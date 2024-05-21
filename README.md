@@ -160,14 +160,11 @@ conda install pytorch==1.9.1 torchvision==0.10.1 torchaudio==0.9.1 cudatoolkit=1
 + Demo: The code and data for demo.
 
 + Predictions: 
-
 Provides trained models and scripts to predict CPIs between user-submitted compound libraries and protein libraries.
-
 	+ Custom_Data: Reference (default) data
 		+ default
 			+ drug_list.txt: Standard format for compound libraries.
 			+ protein_list.txt: Standard format for protein libraries.
-	
 	+ checkpoint.pth: Trained model.
 	+ Mol2Vec
 	+ predictor.py: Prediction Script.
