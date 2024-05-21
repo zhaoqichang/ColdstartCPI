@@ -122,22 +122,23 @@ Check [demo](/demo) for some demo data to play with: python demo_train.py
 	
 	Mol2Vec is customised version of Mol2Vec(https://github.com/samoturk/mol2vec). We recode the mol2vec/feature.py to generate feature matrices of compounds.
 	
-	You will obtain the feature vectors and matrices of the compounds by following command. **dataname** should be BindingDB_AIBind, BioSNAP, and BindingDB.
+	You will obtain the feature vectors and matrices of the compounds by following command. **dataname** should be BindingDB_AIBind, BioSNAP, or BindingDB.
 
 		python Mol2Vec.py --dataset dataname
 	
 	+ ProtTrans
-	You will obtain the feature vectors and matrices of the proteins by following command. **dataname** should be BindingDB_AIBind, BioSNAP, and BindingDB.
+	
+	You will obtain the feature vectors and matrices of the proteins by following command. **dataname** should be BindingDB_AIBind, BioSNAP, or BindingDB.
 	
 		python generator.py --dataset dataname
 		
 + Pretrian_models
 		
-	+ BindingDB_AIbind: The trained models on BindingDB_AIbind dataset.
+	+ BindingDB_AIbind: The trained models on BindingDB_AIbind dataset under warm start, compound cold start, protein cold start, and blind start.
 	
-	+ BioSNAP: The trained models on BioSNAP dataset.
+	+ BioSNAP: The trained models on BioSNAP dataset under warm start, compound cold start, protein cold start, and blind start.
 	
-	+ BindingDB: The trained models on BindingDB dataset.
+	+ BindingDB: The trained models on BindingDB dataset under warm start, compound cold start, protein cold start, and blind start.
 	
 	
 + Train
