@@ -61,26 +61,6 @@ conda env create --name coldstartcpi -f /path/to/coldstartcpi/environment.yml
 conda activate coldstartcpi
 ```
   
-## Demo data
-
-We provide ColdstartCPI running demo through a cloud Jupyter notebook on [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhaoqichang/ColdstartCPI/blob/main/Demo/ColdstartCPI_demo.ipynb). Note it is based on a small sample dataset due to the resource limitation of a free colab account. 
-
-The **expected output and run time** of demo has been provided in the colab notebook for verification.
-
-Check [demo](/demo) for some demo data to play with: python demo_train.py
-
-+ Dataset：The demo data.
-
-+ model.py: The model.
-
-+ dataset.py
-
-+ demo_train.py: The code of demo.
-
-	+ python demo_train.py
-
-	The results are saved in the Results folder.
-
 ## Resources
 + README.md: this file.
 + Datasets: The datasets used in paper.
@@ -165,6 +145,27 @@ Check [demo](/demo) for some demo data to play with: python demo_train.py
 + Demo: The code and data for demo.
 
 + Source_Data: Source data and code used in the manuscript to plot individual figures and tables.
+
+## Demo data
+
+We provide ColdstartCPI running demo through a cloud Jupyter notebook on [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zhaoqichang/ColdstartCPI/blob/main/Demo/ColdstartCPI_demo.ipynb). Note it is based on a small sample dataset due to the resource limitation of a free colab account. 
+
+The **expected output and run time** of demo has been provided in the colab notebook for verification.
+
+Check [demo](/demo) for some demo data to play with: python demo_train.py
+
++ Dataset：The demo data.
+
++ model.py: The model.
+
++ dataset.py
+
++ demo_train.py: The code of demo.
+
+	+ python demo_train.py
+
+	The results are saved in the Results folder.
+
 
 ## Reproducibility
 
