@@ -7,7 +7,8 @@ channels:
 dependencies:
   - python=3.8
   - rdkit-pypi=2022.9.4
-  - numpy=1.18.1
+  - numpy=1.18.3
+  - gensim=3.8.3
   - mol2vec
   - bio-embeddings
   - scikit-learn=1.0.2
@@ -15,4 +16,4 @@ dependencies:
   - tqdm
   - prefetch-generator
   - pytorch::pytorch-cuda=10.2 # 11.3 and 11.6 is OK
-  - pytorch::pytorch=1.12.0
+  - pytorch::pytorch=1.10.0

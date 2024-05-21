@@ -18,7 +18,7 @@ Predicting compound-protein interactions (CPIs) is a critical step in drug disco
 - [Demo data](#Demo-data)
 - [Resources](#Resources)
 - [Reproducibility](#Reproducibility)
-- [Running predictions](#Running predictions)
+- [Predictions](#Predictions)
 - [Contact](#Contact)
 
 
@@ -27,12 +27,13 @@ Predicting compound-protein interactions (CPIs) is a critical step in drug disco
 ColdstartCPI is built on [Python3](https://www.python.org/) and [PyTorch](https://pytorch.org/).
    - Prerequisites: \
        [Python3.*](https://www.python.org/) (version>=3.8)\
+	   [gensim](https://github.com/piskvorky/gensim.git) (version=3.8.3)
        [Mol2Vec](https://github.com/samoturk/mol2vec) \
        [bio_embeddings](https://github.com/sacdallago/bio_embeddings) \
        [CUDA Toolkit](https://anaconda.org/anaconda/cudatoolkit) (version>=10.2, for GPU only)
    - Dependencies: \
-       [PyTorch](https://pytorch.org/) (version >=1.12.0, <=2.1.0) \
-	   [numpy](http://www.numpy.org/) (version = 1.18.1)\
+       [PyTorch](https://pytorch.org/) (version >=1.10.0, <=2.1.0) \
+	   [numpy](http://www.numpy.org/) (version = 1.18.3)\
 	   [scikit-learn](https://scikit-learn.org/stable/) (version = 1.0.2)\
 	   [pandas](https://github.com/pandas-dev/pandas) (version = 1.0.1)\
 	   [rdkit](https://github.com/rdkit/rdkit) (version = 2022.9.4)\
@@ -53,12 +54,16 @@ Install coldstartcpi, its dependencies, and other required packages in one step 
 ```shell
 # download ColdstartCPI
 git clone https://github.com/zhaoqichang/ColdstartCPI
+cd coldstartcpi
 
-# install tools in environment.yml
-conda env create --name coldstartcpi -f /path/to/coldstartcpi/environment.yml
+# create environment named coldstartcpi
+conda create -n coldstartcpi python=3.8
 
 # then the environment can be activated to use
 conda activate coldstartcpi
+
+# install tools in requirements.txt
+pip install -r requirements.txt
 ```
   
 ## Resources

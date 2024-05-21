@@ -1,0 +1,10 @@
+rdkit-pypi==2022.9.4
+numpy==1.18.3
+gensim==3.8.3
+mol2vec
+bio-embeddings
+scikit-learn==1.0.2
+pandas==1.0.1
+tqdm
+prefetch-generator
+torch==1.12.0
