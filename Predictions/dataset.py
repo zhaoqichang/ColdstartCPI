@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings("ignore")
 import torch
 from torch.utils.data import Dataset, DataLoader
 import random
@@ -7,7 +9,6 @@ import os,pickle
 from rdkit import Chem
 from Mol2Vec.mol2vec.features import mol2alt_sentence, MolSentence, Atom2Substructure
 from gensim.models import word2vec
-from bio_embeddings.embed import ProtTransBertBFDEmbedder
 from tqdm import tqdm
 class CustomDataSet(Dataset):
     def __init__(self, pairs):
@@ -55,7 +56,7 @@ class collater_embeding():
             d_masks.append(d_mask==1)
 
             p_g_tensor.append(self.protein_m[p_id][0])
-            protein_matrix = np.zeros([self.p_max, self.protein_m[p_id][1].shape[1]])
+            protein_matrix = np.zeros([self.p_max, 1024])
             p_mask = np.zeros([self.p_max])
             p_dim = self.protein_m[p_id][1].shape[0]
             if p_dim <= self.p_max:
@@ -77,7 +78,7 @@ class collater_embeding():
                d_masks, p_masks]
 
 
-def load_dataset(compound_path,protein_path, batch_size=1):
+def load_dataset(embedder, compound_path,protein_path, batch_size=2):
     drug_model = word2vec.Word2Vec.load('./../Feature_generation/Mol2Vec/model_300dim.pkl')
     keys = set(drug_model.wv.vocab.keys())
     unseen = 'UNK'
@@ -86,7 +87,8 @@ def load_dataset(compound_path,protein_path, batch_size=1):
     drug_matrix = {}
     print("compund feature generating")
     with open(compound_path,"r") as file:
-        for line in tqdm(file.readlines(),total=len(file.readlines())):
+        lines = file.readlines()
+        for line in tqdm(lines,total=len(lines)):
             cid, smiles = line.strip().split()
             try:
                 mol = Chem.MolFromSmiles(smiles)
@@ -109,17 +111,14 @@ def load_dataset(compound_path,protein_path, batch_size=1):
                 print(cid, e)
 
     protein_embed_dict = {}
-    print("ProtTransBert loading")
-    embedder = ProtTransBertBFDEmbedder()
-    print("protein feature generating")
+    print("protien feature generating")
     with open(protein_path,"r") as file:
-        for line in tqdm(file.readlines(),total=len(file.readlines())):
+        lines = file.readlines()
+        for line in tqdm(lines, total=len(lines)):
             pid, aas = line.strip().split()
             matrix = np.array(embedder.embed(aas))
             vector = np.array(embedder.reduce_per_protein(matrix))
-            # print(vector.shape[0])
-            # protein_embed_dict[pid] = [vector, matrix]
-            protein_embed_dict[pid] = vector
+            protein_embed_dict[pid] = [vector, matrix]
 
     data_list = []
     for pid in protein_embed_dict.keys():
@@ -129,7 +128,7 @@ def load_dataset(compound_path,protein_path, batch_size=1):
 
     collate_fn = collater_embeding(drug_descriptor, drug_matrix, protein_embed_dict,p_max = 1000)
 
-    data_loader = DataLoader(data, batch_size=batch_size, shuffle=False, num_workers=4,
+    data_loader = DataLoader(data, batch_size=batch_size, shuffle=False, num_workers=0,
                                     collate_fn=collate_fn)
     print("Number of samples in the data: ", len(data_loader))
 

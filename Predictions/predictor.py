@@ -6,7 +6,7 @@
 import warnings
 warnings.filterwarnings("ignore")
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 import argparse
 import os
 import pandas as pd
@@ -22,14 +22,14 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
-
+from bio_embeddings.embed import ProtTransBertBFDEmbedder
 import os,pickle
 
 
 if __name__ == "__main__":
 
     parse = argparse.ArgumentParser()
-    parse.add_argument('--batch_size', type=int,
+    parse.add_argument('--batch_size', type=int,default=10,
                        help='Set the batch_size according to the size of your GPU memory.')
     parse.add_argument('--compound_path', type=str, default="./Custom_Data/default/drug_list.txt",
                        help='the path of compounds')
@@ -48,7 +48,10 @@ if __name__ == "__main__":
         os.makedirs(save_path)
     print("loading input files.")
     print("This will take some time as Mol2Vec and Bio_embedding need to be called to extract the features of compounds and proteins.")
-    dataset_load = load_dataset(compound_path,protein_path,batch_size=batch_size)
+    print("ProtTransBert loading")
+    embedder = ProtTransBertBFDEmbedder()
+
+    dataset_load = load_dataset(embedder,compound_path,protein_path,batch_size=batch_size)
     """ create model"""
     model = ColdstartCPI(unify_num=512,head_num=4)
     model.load_state_dict(torch.load('./checkpoint.pth'))
