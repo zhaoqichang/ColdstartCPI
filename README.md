@@ -27,7 +27,7 @@ Predicting compound-protein interactions (CPIs) is a critical step in drug disco
 ColdstartCPI is built on [Python3](https://www.python.org/) and [PyTorch](https://pytorch.org/).
    - Prerequisites: \
        [Python3.*](https://www.python.org/) (version>=3.8)\
-	   [gensim](https://github.com/piskvorky/gensim.git) (version=3.8.3)
+	   [gensim](https://github.com/piskvorky/gensim.git) (version=3.8.3)\
        [Mol2Vec](https://github.com/samoturk/mol2vec) \
        [bio_embeddings](https://github.com/sacdallago/bio_embeddings) \
        [CUDA Toolkit](https://anaconda.org/anaconda/cudatoolkit) (version>=10.2, for GPU only)
