@@ -84,7 +84,7 @@ def load_dataset(compound_path,protein_path, batch_size=1):
     unseen_vec = drug_model.wv.word_vec(unseen)
     drug_descriptor = {}
     drug_matrix = {}
-    print("")
+    print("compund feature generating")
     with open(compound_path,"r") as file:
         for line in tqdm(file.readlines(),total=len(file.readlines())):
             cid, smiles = line.strip().split()
@@ -109,7 +109,9 @@ def load_dataset(compound_path,protein_path, batch_size=1):
                 print(cid, e)
 
     protein_embed_dict = {}
+    print("ProtTransBert loading")
     embedder = ProtTransBertBFDEmbedder()
+    print("protein feature generating")
     with open(protein_path,"r") as file:
         for line in tqdm(file.readlines(),total=len(file.readlines())):
             pid, aas = line.strip().split()
