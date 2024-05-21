@@ -26,7 +26,7 @@ Predicting compound-protein interactions (CPIs) is a critical step in drug disco
 
 ColdstartCPI is built on [Python3](https://www.python.org/) and [PyTorch](https://pytorch.org/).
    - Prerequisites: \
-       [Python3.*](https://www.python.org/) (version>=3.7)\
+       [Python3.*](https://www.python.org/) (version>=3.8)\
 	   [gensim](https://github.com/piskvorky/gensim.git) (version=3.8.3)
        [Mol2Vec](https://github.com/samoturk/mol2vec) \
        [bio_embeddings](https://github.com/sacdallago/bio_embeddings) \
@@ -57,14 +57,13 @@ git clone https://github.com/zhaoqichang/ColdstartCPI
 cd coldstartcpi
 
 # create environment named coldstartcpi
-conda create -n coldstartcpi python=3.7.13
+conda create -n coldstartcpi python=3.8.0
 
 # then the environment can be activated to use
 conda activate coldstartcpi
 
 # install bio_embeddings
-pip install bio-embeddings
-pip install bio-embeddings[prottrans]
+pip install bio-embeddings==0.2.2
 
 # install tools in requirements.txt
 pip install -r requirements.txt
