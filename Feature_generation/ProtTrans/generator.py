@@ -24,8 +24,6 @@ if __name__ == "__main__":
             pid, aas = line.strip().split()
             matrix = np.array(embedder.embed(aas))
             vector = np.array(embedder.reduce_per_protein(matrix))
-            # print(vector.shape[0])
-            # protein_embed_dict[pid] = [vector, matrix]
-            protein_embed_dict[pid] = vector
+            protein_embed_dict[pid] = [vector, matrix]
     with open(path+'aas_ProtTransBertBFD1024.pkl', 'wb') as f:
         pickle.dump(protein_embed_dict, f)
