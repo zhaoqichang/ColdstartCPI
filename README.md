@@ -253,6 +253,7 @@ For compounds:
 
 	```
 For proteins:
+
 	```
 	Protein_ID Amino_acid_sequence 
 	P45059 MVKFNSSRKSGKSKKTIRKLT... 
