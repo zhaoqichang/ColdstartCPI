@@ -16,9 +16,9 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from sklearn.metrics import accuracy_score, roc_auc_score, precision_score, f1_score, recall_score,precision_recall_curve, auc
+from sklearn.metrics import accuracy_score, precision_score, f1_score, recall_score,precision_recall_curve, auc
 from sklearn import metrics
-from sklearn.preprocessing import MinMaxScaler
+import argparse
 
 
 def roc_auc(y,pred):
@@ -112,6 +112,14 @@ def test_model(dataset_load,save_path,DATASET, LOSS,save = False):
     return results,loss_test, Accuracy_test, Precision_test, Recall_test, F1_score_test, AUC_test, PRC_test
 
 if __name__ == "__main__":
+
+    parse = argparse.ArgumentParser()
+    parse.add_argument('--scenarios', type=str, default="warm_start",
+                       choices=['warm_start', 'compound_cold_start', 'protein_cold_start', 'blind_start'],
+                       help='the scenario of experiment setting')
+    opt = parse.parse_args()
+    scenarios = opt.scenarios
+
     """select seed"""
     # torch.backends.cudnn.deterministic = True
     # device = torch.device('cuda:0')
@@ -122,13 +130,9 @@ if __name__ == "__main__":
     Early_stopping_patience = 25
     """Load preprocessed data."""
     DATASET = "BindingDB_AIBind"
-    Setting = "warm_start"
-    # Setting = "compound_cold_start"
-    # Setting = "protein_cold_start"
-    # Setting = "blind_start"
 
-    print("Train on {},{}".format(DATASET,Setting))
-    save_path = "./Results/DrugBAN/{}/{}/".format(DATASET,Setting)
+    print("Train on {},{}".format(DATASET,scenarios))
+    save_path = "./Results/DrugBAN/{}/{}/".format(DATASET,scenarios)
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
@@ -142,7 +146,7 @@ if __name__ == "__main__":
         torch.manual_seed(SEED)
         torch.cuda.manual_seed_all(SEED)
         print('*' * 25, 'No.', i_fold + 1, 'Fold', '*' * 25)
-        train_dataset_load, valid_dataset_load, test_dataset_load = load_MolTrans(DATASET, batch_size=Batch_size,i_fold = i_fold,setting=Setting)
+        train_dataset_load, valid_dataset_load, test_dataset_load = load_MolTrans(DATASET, batch_size=Batch_size,i_fold = i_fold,setting=scenarios)
 
         """ create model"""
         model = DrugBAN_pretrain()

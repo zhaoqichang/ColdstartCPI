@@ -1,6 +1,5 @@
 import torch
 from torch.utils.data import Dataset, DataLoader
-import random
 import numpy as np
 import pandas as pd
 
@@ -76,7 +75,7 @@ class WOPretrain_collater():
             proteinint = torch.from_numpy(label_sequence(self.protein_aas[p_id], CHARPROTSET, self.p_max))
             p_m_tensor[num] = proteinint
 
-            labels_tensor[num] = np.int(float(label))
+            labels_tensor[num] = int(float(label))
 
         d_g_tensor = torch.from_numpy(np.array(d_g_tensor)).float()
         p_g_tensor = torch.from_numpy(np.array(p_g_tensor)).float()
@@ -96,28 +95,24 @@ def load_WOPretrain1(DATASET, batch_size,i_fold = 0,setting="warm_start"):
             for line in lines:
                 protein_without_feature.append(line.split()[0])
     columns = ['head', 'tail', 'label']
-    if setting in ["warm_start", "blind_start"]:
-        train_df = pd.read_csv("./../../../Datasets/{}/{}/train_set.csv".format(DATASET, setting))[columns].values
-        valid_df = pd.read_csv("./../../../Datasets/{}/{}/val_set.csv".format(DATASET, setting))[columns].values
-        test_df = pd.read_csv("./../../../Datasets/{}/{}/test_set.csv".format(DATASET, setting))[columns].values
+
+    train_df = pd.read_csv("./../../../Datasets/{}/{}/train_set{}.csv".format(DATASET, setting, i_fold))[
+        columns].values
+    valid_df = pd.read_csv("./../../../Datasets/{}/{}/val_set{}.csv".format(DATASET, setting, i_fold))[
+        columns].values
+    test_df = pd.read_csv("./../../../Datasets/{}/{}/test_set{}.csv".format(DATASET, setting, i_fold))[
+        columns].values
+    if DATASET == "BindingDB_AIBind":
+        train_data_list = [pair for pair in train_df if
+                           pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
+        val_data_list = [pair for pair in valid_df if
+                         pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
+        test_data_list = [pair for pair in test_df if
+                          pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
+    else:
         train_data_list = train_df
         val_data_list = valid_df
         test_data_list = test_df
-    else:
-        train_df = pd.read_csv("./../../../Datasets/{}/{}/train_set{}.csv".format(DATASET, setting, i_fold))[
-            columns].values
-        valid_df = pd.read_csv("./../../../Datasets/{}/{}/val_set{}.csv".format(DATASET, setting, i_fold))[
-            columns].values
-        test_df = pd.read_csv("./../../../Datasets/{}/{}/test_set{}.csv".format(DATASET, setting, i_fold))[
-            columns].values
-        if DATASET == "BindingDB_AIBind":
-            train_data_list = [pair for pair in train_df if
-                               pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
-            val_data_list = [pair for pair in valid_df if
-                             pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
-            test_data_list = [pair for pair in test_df if
-                              pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
-
     train_set = CustomDataSet(train_data_list)
     val_set = CustomDataSet(val_data_list)
     test_set = CustomDataSet(test_data_list)
@@ -188,18 +183,36 @@ class WODecouple_collater():
         return [d_g_tensor, d_m_tensor,p_g_tensor, p_m_tensor], labels_tensor
 
 def load_WODecouple1(DATASET, batch_size,i_fold = 0,setting="warm_start"):
+    if DATASET=="BindingDB_AIBind":
+        drug_without_feature = []
+        with open("./../../../Datasets/{}/drug_without_feature.txt".format(DATASET)) as file:
+            lines = file.readlines()
+            for line in lines:
+                drug_without_feature.append(line.split()[0])
+        protein_without_feature = []
+        with open("./../../../Datasets/{}/protein_without_feature.txt".format(DATASET)) as file:
+            lines = file.readlines()
+            for line in lines:
+                protein_without_feature.append(line.split()[0])
     columns = ['head', 'tail', 'label']
-    if setting in ["warm_start", "blind_start"]:
-        train_df = pd.read_csv("./../../../Datasets/{}/{}/train_set.csv".format(DATASET,setting))[columns]
-        valid_df = pd.read_csv("./../../../Datasets/{}/{}/val_set.csv".format(DATASET,setting))[columns]
-        test_df = pd.read_csv("./../../../Datasets/{}/{}/test_set.csv".format(DATASET,setting))[columns]
+    train_df = pd.read_csv("./../../../Datasets/{}/{}/train_set{}.csv".format(DATASET, setting,i_fold))[columns]
+    valid_df = pd.read_csv("./../../../Datasets/{}/{}/val_set{}.csv".format(DATASET, setting,i_fold))[columns]
+    test_df = pd.read_csv("./../../../Datasets/{}/{}/test_set{}.csv".format(DATASET, setting,i_fold))[columns]
+
+    if DATASET=="BindingDB_AIBind":
+        train_data_list = [pair for pair in train_df if
+                           pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
+        val_data_list = [pair for pair in valid_df if
+                         pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
+        test_data_list = [pair for pair in test_df if
+                          pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
     else:
-        train_df = pd.read_csv("./../../../Datasets/{}/{}/train_set{}.csv".format(DATASET, setting,i_fold))[columns]
-        valid_df = pd.read_csv("./../../../Datasets/{}/{}/val_set{}.csv".format(DATASET, setting,i_fold))[columns]
-        test_df = pd.read_csv("./../../../Datasets/{}/{}/test_set{}.csv".format(DATASET, setting,i_fold))[columns]
-    train_set = CustomDataSet(train_df.values)
-    val_set = CustomDataSet(valid_df.values)
-    test_set = CustomDataSet(test_df.values)
+        train_data_list = train_df
+        val_data_list = valid_df
+        test_data_list = test_df
+    train_set = CustomDataSet(train_data_list)
+    val_set = CustomDataSet(val_data_list)
+    test_set = CustomDataSet(test_data_list)
     print("Loading features")
     drug_features = load_pickle("./../../../Datasets/{}/feature/compound_Mol2Vec300.pkl".format(DATASET))
     drug_pretrain = load_pickle("./../../../Datasets/{}/feature/compound_Atom2Vec300.pkl".format(DATASET))
@@ -255,25 +268,21 @@ def load_WOTransformer1(DATASET, batch_size,i_fold = 0,setting="warm_start"):
                 protein_without_feature.append(line.split()[0])
 
     columns = ['head', 'tail', 'label']
-    if setting in ["warm_start", "blind_start"]:
-        train_df = pd.read_csv("./../../../Datasets/{}/{}/train_set.csv".format(DATASET,setting))[columns].values
-        valid_df = pd.read_csv("./../../../Datasets/{}/{}/val_set.csv".format(DATASET,setting))[columns].values
-        test_df = pd.read_csv("./../../../Datasets/{}/{}/test_set.csv".format(DATASET,setting))[columns].values
+
+    train_df = pd.read_csv("./../../../Datasets/{}/{}/train_set{}.csv".format(DATASET, setting,i_fold))[columns].values
+    valid_df = pd.read_csv("./../../../Datasets/{}/{}/val_set{}.csv".format(DATASET, setting,i_fold))[columns].values
+    test_df = pd.read_csv("./../../../Datasets/{}/{}/test_set{}.csv".format(DATASET, setting,i_fold))[columns].values
+    if DATASET=="BindingDB_AIBind":
+        train_data_list = [pair for pair in train_df if
+                           pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
+        val_data_list = [pair for pair in valid_df if
+                         pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
+        test_data_list = [pair for pair in test_df if
+                          pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
+    else:
         train_data_list = train_df
         val_data_list = valid_df
         test_data_list = test_df
-
-    else:
-        train_df = pd.read_csv("./../../../Datasets/{}/{}/train_set{}.csv".format(DATASET, setting,i_fold))[columns].values
-        valid_df = pd.read_csv("./../../../Datasets/{}/{}/val_set{}.csv".format(DATASET, setting,i_fold))[columns].values
-        test_df = pd.read_csv("./../../../Datasets/{}/{}/test_set{}.csv".format(DATASET, setting,i_fold))[columns].values
-        if DATASET=="BindingDB_AIBind":
-            train_data_list = [pair for pair in train_df if
-                               pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
-            val_data_list = [pair for pair in valid_df if
-                             pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
-            test_data_list = [pair for pair in test_df if
-                              pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
 
     train_set = CustomDataSet(train_data_list)
     val_set = CustomDataSet(val_data_list)
@@ -334,14 +343,9 @@ class MolTrans_collater():
 
 def load_MolTrans(DATASET, batch_size,i_fold = 0,setting="warm_start"):
     columns = ['head', 'tail', 'label']
-    if setting in ["warm_start", "blind_start"]:
-        train_df = pd.read_csv("./../../../Datasets/{}/{}/train_set.csv".format(DATASET,setting))[columns]
-        valid_df = pd.read_csv("./../../../Datasets/{}/{}/val_set.csv".format(DATASET,setting))[columns]
-        test_df = pd.read_csv("./../../../Datasets/{}/{}/test_set.csv".format(DATASET,setting))[columns]
-    else:
-        train_df = pd.read_csv("./../../../Datasets/{}/{}/train_set{}.csv".format(DATASET, setting,i_fold))[columns]
-        valid_df = pd.read_csv("./../../../Datasets/{}/{}/val_set{}.csv".format(DATASET, setting,i_fold))[columns]
-        test_df = pd.read_csv("./../../../Datasets/{}/{}/test_set{}.csv".format(DATASET, setting,i_fold))[columns]
+    train_df = pd.read_csv("./../../../Datasets/{}/{}/train_set{}.csv".format(DATASET, setting,i_fold))[columns]
+    valid_df = pd.read_csv("./../../../Datasets/{}/{}/val_set{}.csv".format(DATASET, setting,i_fold))[columns]
+    test_df = pd.read_csv("./../../../Datasets/{}/{}/test_set{}.csv".format(DATASET, setting,i_fold))[columns]
     train_set = CustomDataSet(train_df.values)
     val_set = CustomDataSet(valid_df.values)
     test_set = CustomDataSet(test_df.values)
@@ -365,23 +369,16 @@ if __name__ == "__main__":
 
     from prefetch_generator import BackgroundGenerator
     from tqdm import tqdm
-    DATASET = "yamanishi_08"
-    scenarios = "warm_start_1_1"
-    data_path = "./../../Datasets/{}/data_folds/{}/test_fold_1.csv".format(DATASET,scenarios)
-    columns = ['head', 'tail', 'label']
-    data = pd.read_csv(data_path)[columns].values
-    data = CustomDataSet(data)
+    DATASET = "BindingDB_AIBind"
+    scenarios = "warm_start"
 
-    drug_features = load_pickle("./../../Datasets/{}/feature/compound_Mol2Vec300.pkl".format(DATASET))
-    drug_pretrain = load_pickle("./../../Datasets/{}/feature/compound_Atom2Vec300.pkl".format(DATASET))
-    protein_pretrain = load_pickle("./../../Datasets/{}/feature/aas_ProtTransBertBFD1024.pkl".format(DATASET))
-    collate_fn = MolTrans_collater(drug_features,drug_pretrain,protein_pretrain)
-    dataset_load = DataLoader(data, batch_size=2, shuffle=False, num_workers=0,
-                                    collate_fn=collate_fn)
+    train_dataset_load, valid_dataset_load, test_dataset_load = load_WODecouple1(DATASET, batch_size=32,
+                                                                                 i_fold=1, setting=scenarios)
+
     data_pbar = tqdm(
         enumerate(
-            BackgroundGenerator(dataset_load)),
-        total=len(dataset_load))
+            BackgroundGenerator(train_dataset_load)),
+        total=len(train_dataset_load))
     for i_batch, i_data in data_pbar:
         '''data preparation '''
         input_tensors, labels_tensor = i_data
