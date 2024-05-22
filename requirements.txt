@@ -5,3 +5,4 @@ scikit-learn==0.24.0
 pandas==1.2.0
 tqdm
 prefetch-generator
+numpy==1.22.0

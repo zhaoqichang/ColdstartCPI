@@ -59,7 +59,7 @@ class collater_embeding():
             p_m_tensor.append(protein_matrix)
             p_masks.append(p_mask==1)
 
-            labels_tensor[num] = np.int(float(label))
+            labels_tensor[num] = int(float(label))
 
         d_g_tensor = torch.from_numpy(np.array(d_g_tensor)).float()
         d_m_tensor = torch.from_numpy(np.array(d_m_tensor)).float()

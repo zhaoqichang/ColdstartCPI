@@ -178,7 +178,7 @@ class WODecouple_collater():
                 protein_matrix = self.protein_m[p_id][1][:self.p_max]
             p_m_tensor.append(protein_matrix)
 
-            labels_tensor[num] = np.int(float(label))
+            labels_tensor[num] = int(float(label))
 
         d_g_tensor = torch.from_numpy(np.array(d_g_tensor)).float()
         d_m_tensor = torch.from_numpy(np.array(d_m_tensor)).float()
@@ -234,7 +234,7 @@ class WOTransformer_collater():
             d_g_tensor.append(self.drug_f[d_id])
             p_g_tensor.append(self.protein_m[p_id][0])
 
-            labels_tensor[num] = np.int(float(label))
+            labels_tensor[num] = int(float(label))
 
         d_g_tensor = torch.from_numpy(np.array(d_g_tensor)).float()
         p_g_tensor = torch.from_numpy(np.array(p_g_tensor)).float()
@@ -325,7 +325,7 @@ class MolTrans_collater():
                 protein_matrix = self.protein_m[p_id][1][:self.p_max]
             p_m_tensor.append(protein_matrix)
 
-            labels_tensor[num] = np.int(float(label))
+            labels_tensor[num] = int(float(label))
 
         d_m_tensor = torch.from_numpy(np.array(d_m_tensor)).float()
         p_m_tensor = torch.from_numpy(np.array(p_m_tensor)).float()

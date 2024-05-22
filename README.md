@@ -33,7 +33,7 @@ ColdstartCPI is built on [Python3](https://www.python.org/) and [PyTorch](https:
        [CUDA Toolkit](https://anaconda.org/anaconda/cudatoolkit) (version>=10.2, for GPU only)
    - Dependencies: \
        [PyTorch](https://pytorch.org/) (version >=1.9.0, <=1.16.0) \
-	   [numpy](http://www.numpy.org/) (version = 1.18.3)\
+	   [numpy](http://www.numpy.org/) (version = 1.22.0)\
 	   [scikit-learn](https://scikit-learn.org/stable/) (version = 1.0.2)\
 	   [pandas](https://github.com/pandas-dev/pandas) (version = 1.0.1)\
 	   [rdkit](https://github.com/rdkit/rdkit) (version = 2022.9.4)\
@@ -66,13 +66,13 @@ conda activate coldstartcpi
 pip install bio-embeddings==0.2.2
 pip install bio-embeddings[all]
 
-# install other tools in requirements.txt
-pip install -r requirements.txt
-
 # Install pytorch according to hardware
 conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 cudatoolkit=11.3 -c pytorch
 # or
 conda install pytorch==1.9.1 torchvision==0.10.1 torchaudio==0.9.1 cudatoolkit=10.2 -c pytorch
+
+# install other tools in requirements.txt
+pip install -r requirements.txt
 
 ```
   
