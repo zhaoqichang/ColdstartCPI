@@ -385,6 +385,5 @@ if __name__ == "__main__":
     for i_batch, i_data in data_pbar:
         '''data preparation '''
         input_tensors, labels_tensor = i_data
-        d_g_tensor, d_m_tensor, p_g_tensor, p_m_tensor, \
-        d_masks, p_masks = input_tensors
+        d_g_tensor, d_m_tensor, p_g_tensor, p_m_tensor = input_tensors
         print(d_m_tensor.shape)

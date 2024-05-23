@@ -240,22 +240,12 @@ if __name__ == "__main__":
 
     from prefetch_generator import BackgroundGenerator
     from tqdm import tqdm
-    DATASET = "yamanishi_08"
-    scenarios = "warm_start_1_1"
-    data_path = "./../../Datasets/{}/data_folds/{}/test_fold_1.csv".format(DATASET,scenarios)
-    columns = ['head', 'tail', 'label']
-    data = pd.read_csv(data_path)[columns].values
-    data = CustomDataSet(data)
-
-    drug_features = load_pickle("./../../Datasets/{}/feature/compound_Mol2Vec300.pkl".format(DATASET))
-    drug_pretrain = load_pickle("./../../Datasets/{}/feature/compound_Atom2Vec300.pkl".format(DATASET))
-    protein_pretrain = load_pickle("./../../Datasets/{}/feature/aas_ProtTransBertBFD1024.pkl".format(DATASET))
-    collate_fn = collater_embeding(drug_features,drug_pretrain,protein_pretrain)
-    dataset_load = DataLoader(data, batch_size=2, shuffle=False, num_workers=0,
-                                    collate_fn=collate_fn)
+    DATASET = "BindingDB_AIBind"
+    scenarios = "warm_start"
+    dataset_load = load_BindingDB_AIBind_dataset(DATASET,scenarios, 32, fold=0)
     data_pbar = tqdm(
         enumerate(
-            BackgroundGenerator(dataset_load)),
+            BackgroundGenerator(c)),
         total=len(dataset_load))
     for i_batch, i_data in data_pbar:
         '''data preparation '''

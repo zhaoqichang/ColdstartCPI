@@ -78,5 +78,5 @@ if __name__ == "__main__":
     p_mask = torch.zeros([2,21]).cuda()
 
     model = ColdstartCPI(100,4).cuda()
-    output = model(c_g_f,c_m,p_g_f,p_m, c_mask, p_mask)
+    output = model([c_g_f,c_m,p_g_f,p_m, c_mask, p_mask])
     print(output.shape)
