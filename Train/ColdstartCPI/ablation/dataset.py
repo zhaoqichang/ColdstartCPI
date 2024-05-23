@@ -183,7 +183,7 @@ class WODecouple_collater():
         return [d_g_tensor, d_m_tensor,p_g_tensor, p_m_tensor], labels_tensor
 
 def load_WODecouple1(DATASET, batch_size,i_fold = 0,setting="warm_start"):
-    if DATASET=="BindingDB_AIBind":
+    if DATASET == "BindingDB_AIBind":
         drug_without_feature = []
         with open("./../../../Datasets/{}/drug_without_feature.txt".format(DATASET)) as file:
             lines = file.readlines()
@@ -195,11 +195,14 @@ def load_WODecouple1(DATASET, batch_size,i_fold = 0,setting="warm_start"):
             for line in lines:
                 protein_without_feature.append(line.split()[0])
     columns = ['head', 'tail', 'label']
-    train_df = pd.read_csv("./../../../Datasets/{}/{}/train_set{}.csv".format(DATASET, setting,i_fold))[columns]
-    valid_df = pd.read_csv("./../../../Datasets/{}/{}/val_set{}.csv".format(DATASET, setting,i_fold))[columns]
-    test_df = pd.read_csv("./../../../Datasets/{}/{}/test_set{}.csv".format(DATASET, setting,i_fold))[columns]
 
-    if DATASET=="BindingDB_AIBind":
+    train_df = pd.read_csv("./../../../Datasets/{}/{}/train_set{}.csv".format(DATASET, setting, i_fold))[
+        columns].values
+    valid_df = pd.read_csv("./../../../Datasets/{}/{}/val_set{}.csv".format(DATASET, setting, i_fold))[
+        columns].values
+    test_df = pd.read_csv("./../../../Datasets/{}/{}/test_set{}.csv".format(DATASET, setting, i_fold))[
+        columns].values
+    if DATASET == "BindingDB_AIBind":
         train_data_list = [pair for pair in train_df if
                            pair[0] not in drug_without_feature and pair[1] not in protein_without_feature]
         val_data_list = [pair for pair in valid_df if
