@@ -363,13 +363,9 @@ if __name__ == "__main__":
     p_g_f = torch.ones([2,1024]).cuda()
     p_m = torch.ones([2,545,1024]).cuda()
 
-    # model = CMA_CLIP_BCE(100,4).cuda()
-    # output = model([c_g_f, c_m, p_g_f, p_m])
-
-    # model = DrugBAN(300, 1024).cuda()
-    # output = model([c_m, p_m])
-
-    model = MolTrans().cuda()
+    model = DrugBAN_pretrain().cuda()
+    # or
+    # model = MolTrans_pretrain().cuda()
     output = model([c_m, p_m])
 
     print(output.shape)
