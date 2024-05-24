@@ -242,10 +242,10 @@ if __name__ == "__main__":
     from tqdm import tqdm
     DATASET = "BindingDB_AIBind"
     scenarios = "warm_start"
-    dataset_load = load_BindingDB_AIBind_dataset(DATASET,scenarios, 32, fold=0)
+    dataset_load,_,_ = load_BindingDB_AIBind_dataset(DATASET,scenarios, 32, fold=0)
     data_pbar = tqdm(
         enumerate(
-            BackgroundGenerator(c)),
+            BackgroundGenerator(dataset_load)),
         total=len(dataset_load))
     for i_batch, i_data in data_pbar:
         '''data preparation '''
