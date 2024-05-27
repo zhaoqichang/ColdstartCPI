@@ -54,7 +54,7 @@ Recommended OS: Linux (Ubuntu 16.04, CentOS 7, etc.)
 ```shell
 # download ColdstartCPI
 git clone https://github.com/zhaoqichang/ColdstartCPI
-cd coldstartcpi
+cd ColdstartCPI
 
 # create environment named coldstartcpi
 conda create -n coldstartcpi python=3.8.0
@@ -268,9 +268,19 @@ For proteins:
 	```	
 For details on the exact format of the TXT file, please see [_Custom_Data/default_](/Predictions/Custom_Data/default) folder.
 
-Simple usage example:
+Simple usage example with default input file:
 
-+ python ./Predictions/predictor.py --compound_path path/to/customed_compounds.txt --protein_path path/to/customed_compounds.txt --identifier identifier
+cd ColdstartCPI/Predictions
+
++ python predictor.py --identifier default
+
+"identifier" is an identifier for this run. And the results are saved in the "./Predictions/default" folder.
+
+Simple usage example with customed input file:
+
+cd ColdstartCPI/Predictions
+
++ python predictor.py --compound_path path/to/customed_compounds.txt --protein_path path/to/customed_compounds.txt --identifier identifier
 
 "identifier" is an identifier for this run. And the results are saved in the "./Predictions/identifier" folder.
 

@@ -94,19 +94,19 @@ def load_scenario_dataset(DATASET,setting,i, batch_size):
     val_set = CustomDataSet(valid_df.values)
     test_set = CustomDataSet(test_df.values)
     try:
-        drug_features = load_pickle("./../../Datasets/{}/compound_Mol2Vec300.pkl".format(DATASET))
-        drug_pretrain = load_pickle("./../../Datasets/{}/compound_Atom2Vec300.pkl".format(DATASET))
-        protein_pretrain = load_pickle("./../../Datasets/{}/aas_ProtTransBertBFD1024.pkl".format(DATASET))
+        drug_features = load_pickle("./../../Datasets/{}/feature/compound_Mol2Vec300.pkl".format(DATASET))
+        drug_pretrain = load_pickle("./../../Datasets/{}/feature/compound_Atom2Vec300.pkl".format(DATASET))
+        protein_pretrain = load_pickle("./../../Datasets/{}/feature/aas_ProtTransBertBFD1024.pkl".format(DATASET))
     except:
         print("Pre-training features for compounds and proteins are not found in the {}/feature folder, \n\
         please check the file naming or run Mol2Vec.py and generator.py first.".format(DATASET))
         raise
     collate_fn = collater_embeding(drug_features, drug_pretrain, protein_pretrain)
 
-    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=4,
+    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=0,
                                     collate_fn=collate_fn,pin_memory=True)
-    val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False, num_workers=4,pin_memory=True,collate_fn=collate_fn)
-    test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=4,pin_memory=True,collate_fn=collate_fn)
+    val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False, num_workers=0,pin_memory=True,collate_fn=collate_fn)
+    test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=0,pin_memory=True,collate_fn=collate_fn)
 
     print("Number of samples in the train set: ", len(train_set))
     print("Number of samples in the validation set: ", len(val_set))
@@ -132,10 +132,10 @@ def load_Miss_dataset(DATASET,miss_rate, batch_size, fold=0):
         raise
     collate_fn = collater_embeding(drug_features, drug_pretrain, protein_pretrain)
 
-    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=4,
+    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=0,
                                     collate_fn=collate_fn)
-    val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False, num_workers=4,collate_fn=collate_fn)
-    test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=4,collate_fn=collate_fn)
+    val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False, num_workers=0,collate_fn=collate_fn)
+    test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=0,collate_fn=collate_fn)
     print("Number of samples in the train set: ", len(train_set))
     print("Number of samples in the validation set: ", len(val_set))
     print("Number of samples in the test set: ", len(test_set))
@@ -177,10 +177,10 @@ def load_BindingDB_AIBind_dataset(DATASET,scenarios, batch_size, fold=0):
         raise
     collate_fn = collater_embeding(drug_features, drug_pretrain, protein_pretrain)
     print("feature load done")
-    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=4,
+    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=0,
                                     collate_fn=collate_fn)
-    val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False, num_workers=4,collate_fn=collate_fn)
-    test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=4,collate_fn=collate_fn)
+    val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False, num_workers=0,collate_fn=collate_fn)
+    test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=0,collate_fn=collate_fn)
 
     print("Number of samples in the train set: ", len(train_set))
     print("Number of samples in the validation set: ", len(val_set))
@@ -225,10 +225,10 @@ def load_BindingDB_AIBind_Miss_dataset(DATASET,miss_rate, batch_size, fold=0):
         raise
     collate_fn = collater_embeding(drug_features, drug_pretrain, protein_pretrain)
 
-    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=4,
+    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=0,
                                     collate_fn=collate_fn)
-    val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False, num_workers=4,collate_fn=collate_fn)
-    test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=4,collate_fn=collate_fn)
+    val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False, num_workers=0,collate_fn=collate_fn)
+    test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=0,collate_fn=collate_fn)
     print("Number of samples in the train set: ", len(train_set))
     print("Number of samples in the validation set: ", len(val_set))
     print("Number of samples in the test set: ", len(test_set))
