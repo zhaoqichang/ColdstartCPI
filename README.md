@@ -129,7 +129,7 @@ pip install -r requirements.txt
 		
 + Pretrian_models
 		
-	+ BindingDB_AIbind: The trained models on BindingDB_AIbind dataset under warm start, compound cold start, protein cold start, and blind start.
+	+ BindingDB_AIBind: The trained models on BindingDB_AIbind dataset under warm start, compound cold start, protein cold start, and blind start.
 	
 	+ BioSNAP: The trained models on BioSNAP dataset under warm start, compound cold start, protein cold start, and blind start.
 	
@@ -224,7 +224,7 @@ We also provide models that have been trained for direct testing. For the warm s
 
 + step 1: Make sure that [_feature_](/Datasets/BindingDB_AIBind/feature) already holds the pre-training feature files (i.e., compound_Atom2Vec300.pkl, compound_Mol2Vec300.pkl, and aas_ProtTransBertBFD1024.pkl) for compounds and proteins;
 
-+ setp 2: Move the fold [_BindingDB_AIbind_](/Pretrian_models/BindingDB_AIbind) to the [_Results_](/Train/ColdstartCPI/Results) folder; 
++ setp 2: Move the fold [_BindingDB_AIbind_](/Pretrian_models/BindingDB_AIBind) to the [_Results_](/Train/ColdstartCPI/Results) folder; 
 
 + setp 3: Loading trained model and testing
 
