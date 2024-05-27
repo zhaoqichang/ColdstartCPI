@@ -10,6 +10,7 @@ from rdkit import Chem
 from Mol2Vec.mol2vec.features import mol2alt_sentence, MolSentence, Atom2Substructure
 from gensim.models import word2vec
 from tqdm import tqdm
+from bio_embeddings.embed import ProtTransBertBFDEmbedder
 class CustomDataSet(Dataset):
     def __init__(self, pairs):
         self.pairs = pairs
@@ -139,9 +140,10 @@ if __name__ == "__main__":
     from prefetch_generator import BackgroundGenerator
     from tqdm import tqdm
     identifier = "default"
-    compound_path = None
-    protein_path = None
-    dataset_load = load_dataset(compound_path,protein_path)
+    compound_path = "./Custom_Data/default/drug_list.txt"
+    protein_path = "./Custom_Data/default/protein_list.txt"
+    embedder = ProtTransBertBFDEmbedder()
+    dataset_load = load_dataset(embedder,compound_path,protein_path)
     data_pbar = tqdm(
         enumerate(
             BackgroundGenerator(dataset_load)),
@@ -149,4 +151,4 @@ if __name__ == "__main__":
     for i_batch, i_data in data_pbar:
         '''data preparation '''
         cids,pids = i_data[0],i_data[1]
-        print(cids.shape)
+        print(len(cids))
