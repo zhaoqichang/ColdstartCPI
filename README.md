@@ -280,7 +280,7 @@ Simple usage example with customed input file:
 
 cd ColdstartCPI/Predictions
 
-+ python predictor.py --compound_path path/to/customed_compounds.txt --protein_path path/to/customed_compounds.txt --identifier identifier
++ python predictor.py --compound_path path/to/customed_compounds.txt --protein_path path/to/customed_proteins.txt --identifier identifier
 
 "identifier" is an identifier for this run. And the results are saved in the "./Predictions/identifier" folder.
 

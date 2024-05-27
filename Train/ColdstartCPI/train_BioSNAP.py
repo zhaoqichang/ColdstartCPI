@@ -155,7 +155,7 @@ if __name__ == "__main__":
         best_epoch = 0
 
         optimizer = torch.optim.Adam(model.parameters(), lr=Learning_rate)
-        if not os.path.exists(save_path + 'valid_best_checkpoint{}.pth'.format(i_fold+10)):
+        if not os.path.exists(save_path + 'valid_best_checkpoint{}.pth'.format(i_fold)):
             """Start training."""
             print('Training...')
             epoch_len = len(str(Epoch))
@@ -200,7 +200,7 @@ if __name__ == "__main__":
                     best_score = valid_score
                     patience = 0
                     best_epoch = epoch + 1
-                    torch.save(model.state_dict(), save_path + 'valid_best_checkpoint{}.pth'.format(i_fold+10))
+                    torch.save(model.state_dict(), save_path + 'valid_best_checkpoint{}.pth'.format(i_fold))
                 else:
                     patience += 1
 
