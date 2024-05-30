@@ -11,7 +11,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class ColdstartCPI(nn.Module):
-    def __init__(self,unify_num,head_num):
+    def __init__(self,unify_num,head_num, dataset = "BindingDB"):
         super(ColdstartCPI, self).__init__()
         self.c_g_unit = nn.Sequential(
             nn.Linear(300, 300),
@@ -40,12 +40,26 @@ class ColdstartCPI(nn.Module):
         )
         self.Interacting_Layer = nn.TransformerEncoderLayer(unify_num, head_num,batch_first=True)
 
-        self.predict_layer = nn.Sequential(
-            nn.Linear(unify_num*2, unify_num*2),
-            nn.PReLU(),
-            nn.Dropout(0.1),
-            nn.Linear(unify_num*2, 2),
-        )
+        if dataset == "BindingDB":
+            self.predict_layer = nn.Sequential(
+                nn.Linear(unify_num * 2, 1024),
+                nn.PReLU(),
+                nn.Dropout(0.1),
+                nn.Linear(1024, 1024),
+                nn.PReLU(),
+                nn.Dropout(0.1),
+                nn.Linear(1024, 512),
+                nn.PReLU(),
+                nn.Dropout(0.1),
+                nn.Linear(512, 2),
+            )
+        else:
+            self.predict_layer = nn.Sequential(
+                nn.Linear(unify_num*2, unify_num*2),
+                nn.PReLU(),
+                nn.Dropout(0.1),
+                nn.Linear(unify_num*2, 2),
+            )
 
     def forward(self, input_tensors):
         c_g_f, c_m, p_g_f, p_m, c_mask, p_mask = input_tensors
