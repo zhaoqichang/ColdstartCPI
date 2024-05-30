@@ -127,7 +127,6 @@ if __name__ == "__main__":
     Early_stopping_patience = 5000
     """Load preprocessed data."""
     DATASET = "BioSNAP"
-    scenarios = "warm_start"
     print("Train on {}".format(DATASET))
     save_path = "./Results/{}/{}/".format(DATASET,scenarios)
     if not os.path.exists(save_path):
