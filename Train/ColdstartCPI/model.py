@@ -11,7 +11,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class ColdstartCPI(nn.Module):
-    def __init__(self,unify_num,head_num, dataset = "BindingDB"):
+    def __init__(self,unify_num,head_num, dataset = "BindingDB_AIBind"):
         super(ColdstartCPI, self).__init__()
         self.c_g_unit = nn.Sequential(
             nn.Linear(300, 300),

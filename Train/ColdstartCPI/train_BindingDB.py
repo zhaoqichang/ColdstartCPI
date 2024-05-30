@@ -144,7 +144,7 @@ if __name__ == "__main__":
         train_dataset_load, valid_dataset_load, test_dataset_load = load_scenario_dataset(DATASET, scenarios, i_fold, batch_size=Batch_size)
 
         """ create model"""
-        model = ColdstartCPI(unify_num=512,head_num=4)
+        model = ColdstartCPI(unify_num=512,head_num=4,dataset = "BindingDB")
         # model = nn.DataParallel(model)
         model = model.cuda()
         Loss = nn.CrossEntropyLoss(weight=None)
