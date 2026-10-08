@@ -56,6 +56,7 @@ if __name__ == "__main__":
     model = ColdstartCPI(unify_num=512,head_num=4)
     model.load_state_dict(torch.load('./checkpoint.pth'))
     model = model.cuda()
+    model.eval()
     data_pbar = tqdm(
             enumerate(
                 BackgroundGenerator(dataset_load)),
